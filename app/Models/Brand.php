@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Category;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Brand extends Model
 {
     use HasFactory;
-
-    public $tables = "categories";
-    
     protected $guarded = ["id"];
+
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
 }

@@ -8,6 +8,7 @@
     <!--favicon-->
     <link rel="icon" href="{{ asset('admin/images/favicon-32x32.png') }}" type="image/png" />
     <!--plugins-->
+    @livewireStyles
     @yield('style')
     <link href="{{ asset('admin/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
     <link href="{{ asset('admin/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
@@ -24,6 +25,7 @@
     <link rel="stylesheet" href="{{ asset('admin/css/dark-theme.css') }}" />
     <link rel="stylesheet" href="{{ asset('admin/css/semi-dark.css') }}" />
     <link rel="stylesheet" href="{{ asset('admin/css/header-colors.css') }}" />
+
     <title>Syndron - Bootstrap5 Admin Template</title>
 </head>
 
@@ -146,6 +148,7 @@
         </div>
     </div>
     <!--end switcher-->
+    @livewireScripts
     <!-- Bootstrap JS -->
     <script src="{{ asset('admin/js/bootstrap.bundle.min.js') }}"></script>
     <!--plugins-->
@@ -156,6 +159,7 @@
     <!--app JS-->
     <script src="{{ asset('admin/js/app.js') }}"></script>
     @yield('script')
+    @stack('script')
     @include('layouts.inc.admin.theme-control')
 </body>
 
