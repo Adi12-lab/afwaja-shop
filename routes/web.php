@@ -40,6 +40,8 @@ Route::prefix("admin")->middleware(["auth", "isAdmin"])->group(function() {
         Route::get("product", "index")->name("product.index");
         Route::get("product/create", "create")->name("product.create");
         Route::post("product", "store")->name("product.store");
+        Route::get("product/{product_id}/edit", "edit")->name("product.edit");
+        Route::put("product/{product_id}", "update")->name("product.update");
     });
 
     Route::get("brands", App\Http\Livewire\Admin\Brand\Index::class);
