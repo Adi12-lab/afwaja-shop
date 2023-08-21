@@ -77,9 +77,9 @@
                 <div class="menu-title">Product</div>
             </a>
             <ul>
-                <li> <a href="{{ url('ecommerce-products') }}"><i class="bx bx-right-arrow-alt"></i>Products</a>
+                <li> <a href="{{ route("product.index") }}"><i class="bx bx-right-arrow-alt"></i>Products</a>
                 </li>
-                <li> <a href="{{ url('ecommerce-add-new-products') }}"><i class="bx bx-right-arrow-alt"></i>Add New
+                <li> <a href="{{ route("product.create") }}"><i class="bx bx-right-arrow-alt"></i>Add New
                         Products</a>
                 </li>
                 <li> <a href="{{ url('ecommerce-add-new-products') }}"><i class="bx bx-right-arrow-alt"></i>Add New

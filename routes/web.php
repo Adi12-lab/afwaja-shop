@@ -17,6 +17,9 @@ use App\Http\Controllers\Admin\DashboardController;
 Route::get('/', function () {
     return view('frontend.index');
 });
+Route::get("test", function() {
+    return view("test");
+});
 Route::get('/account', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -34,7 +37,9 @@ Route::prefix("admin")->middleware(["auth", "isAdmin"])->group(function() {
     });
     
     Route::controller(App\Http\Controllers\Admin\ProductController::class)->group(function() {
-        Route::get("product", "index");
+        Route::get("product", "index")->name("product.index");
+        Route::get("product/create", "create")->name("product.create");
+        Route::post("product", "store")->name("product.store");
     });
 
     Route::get("brands", App\Http\Livewire\Admin\Brand\Index::class);
