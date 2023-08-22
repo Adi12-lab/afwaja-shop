@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string("slug");
             $table->mediumText("small_description")->nullable();
             $table->longText("description")->nullable();
-            $table->tinyInteger("trending")->default("0")->comment("1=trending, 0=not-trending");
+            $table->tinyInteger("isNew")->default("0")->comment("1=new, 0=old");
             $table->tinyInteger("status")->default("0")->comment("1=hidden, 0=visible");
             
             $table->string("meta_title")->nullable();

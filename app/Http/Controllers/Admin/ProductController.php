@@ -27,7 +27,7 @@ class ProductController extends Controller
 
     public function store(ProductFormRequest $request) {
         $validatedData = $request->validated();
-        // dd($request);
+        // dd(isset($validatedData["isNew"]) ? 1 : 0);
         $category = Category::findOrFail($validatedData["category_id"]);
         $product = $category->products()->create([
             "category_id" => $validatedData["category_id"],
@@ -36,7 +36,7 @@ class ProductController extends Controller
             "small_description" => $validatedData["small_description"],
             "description" => $validatedData["description"],
             "brand_id" => $validatedData["brand_id"],
-            "trending" => isset($validatedData["trending"]) ? 1 : 0,
+            "isNew" => isset($validatedData["isNew"]) ? 1 : 0,
             "status" => isset($validatedData["status"]) ? 1 : 0 ,
             "meta_title" => $validatedData["meta_title"],
             "meta_keyword" => $validatedData["meta_keyword"],
@@ -57,19 +57,6 @@ class ProductController extends Controller
                     "image" =>$finalImagePathName,
                 ]);
             }
-        }
-       $variantLength = end($validatedData["selling_price"]) !== null ? count($validatedData["selling_price"]) : count($validatedData["selling_price"]) - 1 ;
-       //Tidak peduli variant bernama atau tidak
-            for($i = 0; $i < $variantLength; $i++) {
-                $product->productVariants()->create([
-                    "product_id" => $product->id,
-                    "variant_name" => $validatedData["variant_name"][$i],
-                    "variant_code" => $validatedData["variant_code"][$i],
-                    "original_price" =>  $validatedData["original_price"][$i] ?? 0,
-                    "selling_price" =>  $validatedData["selling_price"][$i] ?? 0,
-                    "quantity" => $validatedData["quantity"][$i] ?? 0
-                ]);
-            
         }
         return to_route("product.index")->with("message", "Produk baru telah ditambahkan");
     }
@@ -96,7 +83,7 @@ class ProductController extends Controller
                 "small_description" => $validatedData["small_description"],
                 "description" => $validatedData["description"],
                 "brand_id" => $validatedData["brand_id"],
-                "trending" => isset($validatedData["trending"]) ? 1 : 0,
+                "isNew" => isset($validatedData["isNew"]) ? 1 : 0,
                 "status" => isset($validatedData["status"]) ? 1 : 0 ,
                 "meta_title" => $validatedData["meta_title"],
                 "meta_keyword" => $validatedData["meta_keyword"],
@@ -104,18 +91,29 @@ class ProductController extends Controller
             ]);
     
             // Hapus gambar
-            $validatedData["previous_image"] = $validatedData["previous_image"] ?? [null];
-            $deleteImages = ProductImage::whereNotIn("id", $validatedData["previous_image"])->get();
-            if(count($deleteImages) > 0) {
-                foreach($deleteImages as $deleteImage) {
-                    if(File::exists($deleteImage->image)) {
-                        File::delete($deleteImage->image);
-                    }
-                    ProductImage::find($deleteImage)->delete();
-                }   
+            $validatedData["previous_image"] = $validatedData["previous_image"] ?? null;
+            // dd(isset($validatedData["previous_image"]));
+            if(isset($validatedData["previous_image"])) {
+                $deleteImages = ProductImage::whereNotIn("id", $validatedData["previous_image"])->get();
+                if(count($deleteImages) > 0) {//jika ada hasilnya
+                    foreach($deleteImages as $deleteImage) {
+                        if(File::exists($deleteImage->image)) {
+                            File::delete($deleteImage->image);
+                        }
+                        ProductImage::destroy($deleteImage->id);
+                    }   
+                } 
             } else {
+                //ambil semua gambar dari database berdasarkan id,
+                $fetchImages = ProductImage::where("product_id", $product_id)->get();
+                //cek gambar apakah ada
+                foreach($fetchImages as $fetchImage) {
+                    if(File::exists($fetchImage->image)) {
+                        File::delete($fetchImage->image);
+                    }
+                }
+                //setelah proses penghapusan file, hapus pada database
                 ProductImage::where("product_id", $product_id)->delete();
-                File::cleanDirectory("uploads/product");
             }
 
             // Tambahkan gambar
@@ -136,23 +134,8 @@ class ProductController extends Controller
                 }
             }
         }
-
-        $variantLength = end($validatedData["selling_price"]) !== null ? count($validatedData["selling_price"]) : count($validatedData["selling_price"]) - 1 ;
-        //Tidak peduli variant bernama atau tidak
-             for($i = 0; $i < $variantLength; $i++) {
-                 $product->productVariants()->create([
-                     "product_id" => $product->id,
-                     "variant_name" => $validatedData["variant_name"][$i],
-                     "variant_code" => $validatedData["variant_code"][$i],
-                     "original_price" =>  $validatedData["original_price"][$i] ?? 0,
-                     "selling_price" =>  $validatedData["selling_price"][$i] ?? 0,
-                     "quantity" => $validatedData["quantity"][$i] ?? 0
-                 ]);
-             
-         }
        
         return to_route("product.index")->with("message", "Produk $product->name berhasil diedit");
     }
-
   
 }

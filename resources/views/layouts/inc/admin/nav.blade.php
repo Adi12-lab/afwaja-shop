@@ -56,9 +56,9 @@
                 <div class="menu-title">Category</div>
             </a>
             <ul>
-                <li> <a href="{{ url('admin/category') }}"><i class="bx bx-right-arrow-alt"></i>Categories</a>
+                <li> <a href="{{ route("category.index") }}"><i class="bx bx-right-arrow-alt"></i>Categories</a>
                 </li>
-                <li> <a href="{{ url('admin/category/create') }}"><i class="bx bx-right-arrow-alt"></i>Add New
+                <li> <a href="{{ route("category.create") }}"><i class="bx bx-right-arrow-alt"></i>Add New
                         Category</a>
                 </li>
             </ul>
@@ -82,8 +82,7 @@
                 <li> <a href="{{ route("product.create") }}"><i class="bx bx-right-arrow-alt"></i>Add New
                         Products</a>
                 </li>
-                <li> <a href="{{ url('ecommerce-add-new-products') }}"><i class="bx bx-right-arrow-alt"></i>Add New
-                        Variants</a>
+                <li> <a href="{{ route("productVariant") }}"><i class="bx bx-right-arrow-alt"></i>Product Variants</a>
                 </li>
             </ul>
         </li>

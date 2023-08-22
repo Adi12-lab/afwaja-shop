@@ -29,9 +29,9 @@ Route::prefix("admin")->middleware(["auth", "isAdmin"])->group(function() {
 
       //Category Routes
       Route::controller(App\Http\Controllers\Admin\CategoryController::class)->group(function() {
-        Route::get("category", "index");
+        Route::get("category", "index")->name("category.index");
         Route::post("category", "store")->name("category.store");
-        Route::get("category/create", "create");
+        Route::get("category/create", "create")->name("category.create");
         Route::get("category/{category}/edit", "edit")->name("category.edit");
         Route::put("category/{category}", "update")->name("category.update");
     });
@@ -43,8 +43,9 @@ Route::prefix("admin")->middleware(["auth", "isAdmin"])->group(function() {
         Route::get("product/{product_id}/edit", "edit")->name("product.edit");
         Route::put("product/{product_id}", "update")->name("product.update");
     });
-
+    
     Route::get("brands", App\Http\Livewire\Admin\Brand\Index::class);
+    Route::get("productVariants", App\Http\Livewire\Admin\ProductVariants\Index::class)->name("productVariant");
 
 
 });

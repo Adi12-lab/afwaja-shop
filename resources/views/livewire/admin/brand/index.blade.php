@@ -10,7 +10,7 @@
                     <h6 class="mb-0 text-uppercase">
                         Brand <i class="bx bx-bold"></i>
                         <a href="" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal"
-                            data-bs-target="#addBrandModal">Add Brands</a>
+                            data-bs-target="#addBrandModal">Tambah Brand</a>
                     </h6>
                     <hr />
                     <div class="card">
