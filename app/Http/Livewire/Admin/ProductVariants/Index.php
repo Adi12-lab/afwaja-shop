@@ -43,17 +43,28 @@ class Index extends Component
 
     public function storeProductVariant() {
         $this->validate();
-        ProductVariant::create([
-            "name" => $this->name,
-            "code" => $this->code,
-            "size" => $this->size,
-            "original_price" => $this->original_price,
-            "selling_price" => $this->selling_price,
-            "quantity" => $this->quantity,
-            "product_id" => $this->product_id,
-        ]);
+        try {
+            ProductVariant::create([
+                "name" => $this->name,
+                "code" => $this->code,
+                "size" => $this->size,
+                "original_price" => $this->original_price,
+                "selling_price" => $this->selling_price,
+                "quantity" => $this->quantity,
+                "product_id" => $this->product_id,
+            ]);
+            session()->flash("message", [
+                "status" => 201,
+               "message" => "Varian produk telah ditambahkan"
+            ]);
+        } catch(Exception $e) {
+            session()->flash("message",
+            [   "status" => 403,
+                "message" => $e->getMessage()
+            ]);
 
-        session()->flash("message", "Varian produk telah ditambah");
+        }
+
         $this->dispatchBrowserEvent("close-modal");
         $this->resetInput();
     }  
@@ -112,8 +123,19 @@ class Index extends Component
     }
 
     public function destroyProductVariant() {
-        ProductVariant::findOrFail($this->productVariant_id)->delete();
-        session()->flash("message", "Varian produk berhasil dihapus");
+        try {
+            ProductVariant::findOrFail($this->productVariant_id)->delete();
+            session()->flash("message", 
+            [   "status" => 204,
+                "message" => "Varian produk berhasil dihapus"
+            ]);
+        } catch(Exception $e) {
+            session()->flash("message", 
+            [   "status" => 403,
+                "message" => $e->getMessage()
+            ]);
+
+        }
         $this->dispatchBrowserEvent("close-modal");
         $this->resetInput();
     }

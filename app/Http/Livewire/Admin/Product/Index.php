@@ -35,7 +35,7 @@ class Index extends Component
         $products = Product::with(["category", "productImages"])->get();   
         
         return view('livewire.admin.product.index', 
-        ["products" => $products])->extends("layouts.admin")->section("wrapper");
+        ["products" => $products]);
     }
 
 }

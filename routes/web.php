@@ -16,13 +16,21 @@ use App\Http\Controllers\Admin\DashboardController;
 
 Route::get('/', function () {
     return view('frontend.index');
-});
+})->name("home");
 Route::get("test", function() {
     return view("test");
 });
 Route::get('/account', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+// Route::controller(App\Http\Controllers\Frontend\ProductController::class)->group(function() {
+//     Route::get("produk", "index");
+// });
+
+Route::get("produk", App\Http\Livewire\Frontend\Product\Index::class)->name("frontend.product.index");
+
 
 Route::prefix("admin")->middleware(["auth", "isAdmin"])->group(function() {
     Route::get("/dashboard",  [DashboardController::class, "index"])->name("admin.dashboard");

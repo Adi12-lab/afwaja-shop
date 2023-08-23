@@ -8,7 +8,7 @@
                         <div class="col-xl-3 col-md-6 col-12">
                             <div class="ltn__feature-item ltn__feature-item-8">
                                 <div class="ltn__feature-icon">
-                                    <img src="img/icons/svg/4-track.svg" alt="#">
+                                    <img src="{{asset("assets/img/icons/svg/4-track.svg")}}" alt="#">
                                 </div>
                                 <div class="ltn__feature-info">
                                     <h4>Free home delivery</h4>
@@ -20,7 +20,7 @@
                         <div class="col-xl-3 col-md-6 col-12">
                             <div class="ltn__feature-item ltn__feature-item-8">
                                 <div class="ltn__feature-icon">
-                                    <img src="img/icons/svg/5-madel.svg" alt="#">
+                                    <img src="{{asset("assets/img/icons/svg/5-madel.svg")}}" alt="#">
                                 </div>
                                 <div class="ltn__feature-info">
                                     <h4>Quality Products</h4>
@@ -32,7 +32,7 @@
                         <div class="col-xl-3 col-md-6 col-12">
                             <div class="ltn__feature-item ltn__feature-item-8">
                                 <div class="ltn__feature-icon">
-                                    <img src="img/icons/svg/6-return.svg" alt="#">
+                                    <img src="{{asset("assets/img/icons/svg/6-return.svg")}}" alt="#">
                                 </div>
                                 <div class="ltn__feature-info">
                                     <h4>3 Days Return</h4>
@@ -44,7 +44,7 @@
                         <div class="col-xl-3 col-md-6 col-12">
                             <div class="ltn__feature-item ltn__feature-item-8">
                                 <div class="ltn__feature-icon">
-                                    <img src="img/icons/svg/7-support.svg" alt="#">
+                                    <img src="{{asset("assets/img/icons/svg/7-support.svg")}}" alt="#">
                                 </div>
                                 <div class="ltn__feature-info">
                                     <h4>Online Support</h4>

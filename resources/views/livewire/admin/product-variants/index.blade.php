@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col mx-auto">
                     @if (session('message'))
-                        <div class="alert alert-{{session("message")["status"] === 200 ? "success" : "danger"}}">{{ session('message')["message"] }}</div>
+                        <div class="alert alert-{{session("message")["status"] !== 403 ? "success" : "danger"}}">{{ session('message')["message"] }}</div>
                     @endif
                     <h6 class="mb-0 text-uppercase">
                         Varian <i class="bx bx-selection"></i>

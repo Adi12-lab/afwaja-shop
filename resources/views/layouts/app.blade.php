@@ -8,7 +8,8 @@
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    
+    @livewireStyles
     <!-- Place favicon.png in the root directory -->
     <link rel="shortcut icon" href="{{asset("assets/img/favicon.png")}}" type="image/x-icon" />
     <!-- Font Icons css -->
@@ -20,7 +21,6 @@
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{asset("assets/css/responsive.css")}}">
 
-    @livewireStyles
 </head>
 
 <body>
@@ -34,7 +34,7 @@
     <div class="body-wrapper">
         @include('layouts.inc.frontend.header')
         @include("layouts.inc.frontend.utilize")
-
+        
         @yield("main")
 
         @include("layouts.inc.frontend.feature")

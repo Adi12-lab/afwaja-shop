@@ -8428,15 +8428,16 @@ blockquote {
     font-family: var(--ltn__heading-font); }
     .ltn__pagination ul li:last-child {
       margin-right: 0px; }
-    .ltn__pagination ul li a {
+    .ltn__pagination ul li a,  .ltn__pagination ul li span{
       height: 50px;
       width: 50px;
       line-height: 46px;
       border: 2px solid var(--border-color-11);
       text-align: center;
+      cursor: pointer;
       display: block;
       font-weight: 700; }
-    .ltn__pagination ul li:hover a, .ltn__pagination ul li.active a {
+    .ltn__pagination ul li:hover a, .ltn__pagination ul li.active span {
       background-color: var(--ltn__secondary-color);
       border-color: var(--ltn__secondary-color);
       color: var(--white); }

@@ -65,7 +65,7 @@
                                        </li>
                                        <li class="menu-icon"><a href="#">Products</a>
                                            <ul>
-                                               <li><a href="shop.html">Product</a></li>
+                                               <li><a href="{{url("/produk")}}">Product</a></li>
                                                <li><a href="shop-grid.html">Product Grid</a></li>
                                                <li><a href="shop-left-sidebar.html">Product Left Sidebar</a></li>
                                                <li><a href="shop-right-sidebar.html">Product Right Sidebar</a></li>
