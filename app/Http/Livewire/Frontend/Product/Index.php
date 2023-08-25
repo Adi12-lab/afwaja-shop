@@ -29,7 +29,7 @@ class Index extends Component
         return view('livewire.frontend.product.index', [
             "products" => $products,
             "categories" => $categories
-        ])->extends("layouts.app")->section("main");
+        ])->extends("layouts.app")->sectibon("main");
     }
 
 }

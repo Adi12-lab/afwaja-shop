@@ -4,10 +4,10 @@ namespace App\Http\Livewire\Frontend\Cart;
 
 use Livewire\Component;
 
-class CartAlert extends Component
+class CartCounter extends Component
 {
     public function render()
     {
-        return view('livewire.frontend.cart.cart-alert');
+        return view('livewire.frontend.cart.cart-counter');
     }
 }

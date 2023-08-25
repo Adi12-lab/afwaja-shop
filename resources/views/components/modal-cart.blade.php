@@ -1,6 +1,6 @@
-<!-- MODAL AREA START (Add To Cart Modal) -->
-<div class="ltn__modal-area ltn__add-to-cart-modal-area">
-    <div class="modal fade" id="add_to_cart_modal" tabindex="-1">
+ <!-- MODAL AREA START (Add To Cart Modal) -->
+ <div class="ltn__modal-area ltn__add-to-cart-modal-area">
+    <div class="modal fade show" id="add_to_cart_modal" tabindex="-1">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -23,7 +23,8 @@
                                         <div class="btn-wrapper">
                                             <a href="cart.html" class="theme-btn-1 btn btn-effect-1">View
                                                 Cart</a>
-                                            <a href="checkout.html" class="theme-btn-2 btn btn-effect-2">Checkout</a>
+                                            <a href="checkout.html"
+                                                class="theme-btn-2 btn btn-effect-2">Checkout</a>
                                         </div>
                                     </div>
                                     <!-- additional-info -->

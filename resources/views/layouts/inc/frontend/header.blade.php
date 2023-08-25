@@ -64,17 +64,7 @@
 
                                        </li>
                                        <li class="menu-icon"><a href="#">Products</a>
-                                           <ul>
-                                               <li><a href="{{url("/produk")}}">Product</a></li>
-                                               <li><a href="shop-grid.html">Product Grid</a></li>
-                                               <li><a href="shop-left-sidebar.html">Product Left Sidebar</a></li>
-                                               <li><a href="shop-right-sidebar.html">Product Right Sidebar</a></li>
-                                               <li><a href="product-details.html">Product Details</a></li>
-                                               <li><a href="product-details-no-sidebar.html">Details No Sidebar</a>
-                                               </li>
-                                               <li><a href="product-details-hover-zoom.html">Details Hover Zoom</a>
-                                               </li>
-                                           </ul>
+                                           <livewire:frontend.header-category />
                                        </li>
 
                                        <li class="menu-icon"><a href="#">News</a>
@@ -131,12 +121,7 @@
                                </ul>
                            </div>
                            <!-- mini-cart -->
-                           <div class="mini-cart-icon">
-                               <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
-                                   <i class="icon-shopping-cart"></i>
-                                   <sup>2</sup>
-                               </a>
-                           </div>
+                           <livewire:frontend.cart.cart-counter />
                            <!-- Mobile Menu Button -->
                            <div class="mobile-menu-toggle d-xl-none">
                                <a href="#ltn__utilize-mobile-menu" class="ltn__utilize-toggle">

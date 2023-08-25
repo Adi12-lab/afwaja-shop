@@ -17,6 +17,10 @@ Breadcrumbs::for('produk', function (BreadcrumbTrail $trail) {
     $trail->parent('/');
     $trail->push('List Produk', route('frontend.product.index'));
 });
+Breadcrumbs::for("produkview", function(BreadcrumbTrail $trail, $product ) {
+    $trail->parent("produk");
+    $trail->push($product->name, route("frontend.product.view", $product->slug));
+});
 
 // // Home > Blog > [Category]
 // Breadcrumbs::for('category', function (BreadcrumbTrail $trail, $category) {

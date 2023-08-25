@@ -14,9 +14,13 @@ use App\Http\Controllers\Admin\DashboardController;
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.index');
-})->name("home");
+
+
+
+
+Route::get("/", App\Http\Livewire\Frontend\Index::class)->name("home");
+Route::get("produk", App\Http\Livewire\Frontend\Product\Index::class)->name("frontend.product.index");
+
 Route::get("test", function() {
     return view("test");
 });
@@ -25,11 +29,12 @@ Route::get('/account', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-// Route::controller(App\Http\Controllers\Frontend\ProductController::class)->group(function() {
-//     Route::get("produk", "index");
-// });
 
-Route::get("produk", App\Http\Livewire\Frontend\Product\Index::class)->name("frontend.product.index");
+Route::controller(App\Http\Controllers\Frontend\FrontendController::class)->group(function() {
+    Route::get("kategori", "categories");
+    Route::get("kategori/{category_slug}", "productCategory")->name("frontend.category.view");
+    Route::get("produk/{product_slug}", "productView")->name("frontend.product.view");
+});
 
 
 Route::prefix("admin")->middleware(["auth", "isAdmin"])->group(function() {

@@ -1,4 +1,4 @@
-<div>
+<div> 
     {{ Breadcrumbs::render('produk') }}
     <div class="ltn__product-area mb-120">
          <div class="container">
@@ -43,9 +43,9 @@
                                          <div class="col-xl-4 col-sm-6 col-12">
                                              <div class="ltn__product-item ltn__product-item-3 text-center">
                                                  <div class="product-img">
-                                                     <a href="product-details.html"><img
+                                                     <a href="{{route("frontend.product.view", $product->slug)}}"><img
                                                              src="{{ asset($product->productImages[0]->image) }}"
-                                                             alt="#"></a>
+                                                             alt="Thumbanail"></a>
                                                      <div class="product-badge">
                                                          <ul>
                                                              <li class="sale-badge">Sale</li>
@@ -75,7 +75,7 @@
                                                  </div>
                                                  <div class="product-info">
                                                      <h2 class="product-title"><a
-                                                             href="product-details.html">{{ $product->name }}</a></h2>
+                                                             href="{{route("frontend.product.view", $product->slug)}}">{{ $product->name }}</a></h2>
                                                      <div class="product-price">
                                                          <span>{{ rupiah($product->productVariants[0]->selling_price) }}</span>
                                                          <del>{{ rupiah($product->productVariants[0]->original_price) }}</del>
@@ -340,5 +340,5 @@
              </div>
          </div>
      </div>
-    @include("livewire.frontend.product.modal")
+    @include("components.modal-view")
 </div>
