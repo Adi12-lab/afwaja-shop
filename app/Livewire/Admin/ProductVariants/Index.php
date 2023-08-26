@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\ProductVariants;
+namespace App\Livewire\Admin\ProductVariants;
 
 use App\Models\Product;
 use App\Models\ProductVariant;
@@ -65,7 +65,7 @@ class Index extends Component
 
         }
 
-        $this->dispatchBrowserEvent("close-modal");
+        $this->dispatch("close-modal");
         $this->resetInput();
     }  
 
@@ -114,7 +114,7 @@ class Index extends Component
             ]);
         }
 
-        $this->dispatchBrowserEvent("close-modal");
+        $this->dispatch("close-modal");
         $this->resetInput();
     }  
 
@@ -136,7 +136,7 @@ class Index extends Component
             ]);
 
         }
-        $this->dispatchBrowserEvent("close-modal");
+        $this->dispatch("close-modal");
         $this->resetInput();
     }
     

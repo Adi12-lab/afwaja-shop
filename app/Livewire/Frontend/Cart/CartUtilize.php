@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Frontend\Cart;
+namespace App\Livewire\Frontend\Cart;
 
 use Livewire\Component;
 

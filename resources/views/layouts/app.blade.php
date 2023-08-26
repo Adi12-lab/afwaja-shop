@@ -8,18 +8,18 @@
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    @livewireStyles
+
     <!-- Place favicon.png in the root directory -->
-    <link rel="shortcut icon" href="{{asset("assets/img/favicon.png")}}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}" type="image/x-icon" />
     <!-- Font Icons css -->
-    <link rel="stylesheet" href="{{asset("assets/css/font-icons.css")}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/font-icons.css') }}">
     <!-- plugins css -->
-    <link rel="stylesheet" href="{{asset("assets/css/plugins.css")}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins.css') }}">
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="{{asset("assets/css/style.css")}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- Responsive css -->
-    <link rel="stylesheet" href="{{asset("assets/css/responsive.css")}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+    @livewireStyles
 
 </head>
 
@@ -33,23 +33,26 @@
     <!-- Body main wrapper start -->
     <div class="body-wrapper">
         @include('layouts.inc.frontend.header')
-        @include("layouts.inc.frontend.utilize")
-        
-        @yield("main")
+        @include('layouts.inc.frontend.utilize')
 
-        @include("layouts.inc.frontend.feature")
-        @include("layouts.inc.frontend.footer")
+        @yield('main')
+
+        @include('layouts.inc.frontend.feature')
+        @include('layouts.inc.frontend.footer')
+        <livewire:frontend.wishlist.alert />
     </div>
 
-        <!-- Body main wrapper end -->
+    <!-- Body main wrapper end -->
 
-        @livewireScripts
-        <!-- All JS Plugins -->
-        <script src="{{asset("assets/js/plugins.js")}}"></script>
-        <!-- Main JS -->
-        <script src="{{asset("assets/js/main.js")}}"></script>
+    <!-- All JS Plugins -->
+    <script src="{{ asset('assets/js/plugins.js') }}"></script>
+    <!-- Main JS -->
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @livewireScripts
 
-        @stack("scripts")
+    @stack('scripts')
 
 </body>
 

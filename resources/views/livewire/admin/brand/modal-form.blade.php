@@ -8,25 +8,25 @@
                  <button type="button" class="btn-close" wire:click="closeModal" data-bs-dismiss="modal"
                      aria-label="Close"></button>
              </div>
-             <form wire:submit.prevent="storeBrand()">
+             <form wire:submit="storeBrand()">
                  <div class="modal-body">
                      <div class="mb-3">
                          <label for="">Brand name</label>
-                         <input type="text" wire:model.defer="name" class="form-control">
+                         <input type="text" wire:model="name" class="form-control">
                          @error('name')
                              <small class="text-danger">{{ $message }}</small>
                          @enderror
                      </div>
                      <div class="mb-3">
                          <label for="">Brand slug</label>
-                         <input type="text" wire:model.defer="slug" class="form-control">
+                         <input type="text" wire:model="slug" class="form-control">
                          @error('slug')
                              <small class="text-danger">{{ $message }}</small>
                          @enderror
                      </div>
                      <div class="mb-3">
                          <label for="">Arsipkan</label> <br />
-                         <input type="checkbox" wire:model.defer="status">
+                         <input type="checkbox" wire:model="status">
                          @error('status')
                              <small class="text-danger">{{ $message }}</small>
                          @enderror
@@ -60,25 +60,25 @@
                  </div>Loading...
              </div>
              <div wire:loading.remove>
-                 <form wire:submit.prevent="updateBrand()">
+                 <form wire:submit="updateBrand()">
                      <div class="modal-body">
                          <div class="mb-3">
                              <label for="">Brand name</label>
-                             <input type="text" wire:model.defer="name" class="form-control">
+                             <input type="text" wire:model="name" class="form-control">
                              @error('name')
                                  <small class="text-danger">{{ $message }}</small>
                              @enderror
                          </div>
                          <div class="mb-3">
                              <label for="">Brand slug</label>
-                             <input type="text" wire:model.defer="slug" class="form-control">
+                             <input type="text" wire:model="slug" class="form-control">
                              @error('slug')
                                  <small class="text-danger">{{ $message }}</small>
                              @enderror
                          </div>
                          <div class="mb-3">
                              <label for="">Arsipkan</label> <br />
-                             <input type="checkbox" wire:model.defer="status" style="width:20px;height:20px;">
+                             <input type="checkbox" wire:model="status" style="width:20px;height:20px;">
                              @error('status')
                                  <small class="text-danger">{{ $message }}</small>
                              @enderror
@@ -111,7 +111,7 @@
              </div>
              <div wire:loading.remove>
 
-                 <form wire:submit.prevent="destroyBrand">
+                 <form wire:submit="destroyBrand">
                      <div class="modal-body text-white">
                          <p>Anda yakin ingin menghapus brand ini ?</p>
                      </div>

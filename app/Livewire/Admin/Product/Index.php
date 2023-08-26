@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Product;
+namespace App\Livewire\Admin\Product;
 
 use App\Models\Product;
 use App\Models\ProductImage;
@@ -27,7 +27,7 @@ class Index extends Component
 
         Product::destroy($this->product_id);
         session()->flash("message", "Produk berhasil dihapus");
-        $this->dispatchBrowserEvent("close-modal");
+        $this->dispatch("close-modal");
     }
 
     public function render()

@@ -7,7 +7,7 @@
                     <h5 class="modal-title text-white">Hapus Category</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form wire:submit.prevent="destroyCategory">
+                <form wire:submit="destroyCategory">
                     <div class="modal-body text-white">
                         <p>Anda yakin ingin menghapus category ini ?</p>
                     </div>

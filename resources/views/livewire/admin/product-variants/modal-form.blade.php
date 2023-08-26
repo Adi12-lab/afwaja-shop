@@ -7,11 +7,11 @@
                  <button type="button" class="btn-close" wire:click="closeModal" data-bs-dismiss="modal"
                      aria-label="Close"></button>
              </div>
-             <form wire:submit.prevent="storeProductVariant()">
+             <form wire:submit="storeProductVariant()">
                 <div class="row modal-body">
                     <div class="mb-3">
                         <label>Pilih produk</label>
-                        <select wire:model.defer="product_id" class="form-control" required>
+                        <select wire:model="product_id" class="form-control" required>
                             <option value="">-- pilih produk --</option>
 
                            @foreach ($products as $product)
@@ -24,42 +24,42 @@
                     </div>
                     <div class="col-6 mb-3">
                         <label>Nama varian</label>
-                        <input type="text" wire:model.defer="name" class="form-control">
+                        <input type="text" wire:model="name" class="form-control">
                         @error('name')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="col-6 mb-3">
                         <label>Kode Varian</label>
-                        <input type="text" wire:model.defer="code" class="form-control">
+                        <input type="text" wire:model="code" class="form-control">
                         @error('code')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="col-6 mb-3">
                         <label>Size Varian</label>
-                        <input type="text" wire:model.defer="size" class="form-control">
+                        <input type="text" wire:model="size" class="form-control">
                         @error('size')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="col-6 mb-3">
                         <label>Stok</label>
-                        <input type="number" wire:model.defer="quantity" class="form-control">
+                        <input type="number" wire:model="quantity" class="form-control">
                         @error('quantity')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label>Harga Asli</label>
-                        <input type="number" wire:model.defer="original_price" class="form-control">
+                        <input type="number" wire:model="original_price" class="form-control">
                         @error('original_price')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label>Harga Jual</label>
-                        <input type="number" wire:model.defer="selling_price" class="form-control">
+                        <input type="number" wire:model="selling_price" class="form-control">
                         @error('selling_price')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
@@ -93,11 +93,11 @@
                  </div>Loading...
              </div>
              <div wire:loading.remove>
-                 <form wire:submit.prevent="updateProductVariant()">
+                 <form wire:submit="updateProductVariant()">
                      <div class="row modal-body">
                          <div class="mb-3">
                              <label>Pilih produk</label>
-                             <select wire:model.defer="product_id" class="form-control" required>
+                             <select wire:model="product_id" class="form-control" required>
                                  <option value="">-- pilih produk --</option>
 
                                 @foreach ($products as $product)
@@ -110,42 +110,42 @@
                          </div>
                          <div class="col-6 mb-3">
                              <label>Nama varian</label>
-                             <input type="text" wire:model.defer="name" class="form-control">
+                             <input type="text" wire:model="name" class="form-control">
                              @error('name')
                                  <small class="text-danger">{{ $message }}</small>
                              @enderror
                          </div>
                          <div class="col-6 mb-3">
                              <label>Kode Varian</label>
-                             <input type="text" wire:model.defer="code" class="form-control">
+                             <input type="text" wire:model="code" class="form-control">
                              @error('code')
                                  <small class="text-danger">{{ $message }}</small>
                              @enderror
                          </div>
                          <div class="col-6 mb-3">
                              <label>Size Varian</label>
-                             <input type="text" wire:model.defer="code" class="form-control">
+                             <input type="text" wire:model="code" class="form-control">
                              @error('code')
                                  <small class="text-danger">{{ $message }}</small>
                              @enderror
                          </div>
                          <div class="col-6 mb-3">
                             <label>Stok</label>
-                            <input type="number" wire:model.defer="quantity" class="form-control">
+                            <input type="number" wire:model="quantity" class="form-control">
                             @error('quantity')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
                          <div class="mb-3">
                              <label>Harga Asli</label>
-                             <input type="number" wire:model.defer="original_price" class="form-control">
+                             <input type="number" wire:model="original_price" class="form-control">
                              @error('original_price')
                                  <small class="text-danger">{{ $message }}</small>
                              @enderror
                          </div>
                          <div class="mb-3">
                              <label>Harga Jual</label>
-                             <input type="number" wire:model.defer="selling_price" class="form-control">
+                             <input type="number" wire:model="selling_price" class="form-control">
                              @error('selling_price')
                                  <small class="text-danger">{{ $message }}</small>
                              @enderror
@@ -179,7 +179,7 @@
              </div>
              <div wire:loading.remove>
 
-                 <form wire:submit.prevent="destroyProductVariant">
+                 <form wire:submit="destroyProductVariant">
                      <div class="modal-body text-white">
                          <p>Anda yakin ingin menghapus menghapus varian ini ?</p>
                      </div>

@@ -18,8 +18,10 @@ use App\Http\Controllers\Admin\DashboardController;
 
 
 
-Route::get("/", App\Http\Livewire\Frontend\Index::class)->name("home");
-Route::get("produk", App\Http\Livewire\Frontend\Product\Index::class)->name("frontend.product.index");
+Route::get("/", App\Livewire\Frontend\Index::class)->name("home");
+Route::get("produk", App\Livewire\Frontend\Product\Index::class)->name("frontend.product.index");
+Route::get("produk/{product:slug}", App\Livewire\Frontend\Product\View::class)->name("frontend.product.view");
+Route::get("favorit", App\Livewire\Frontend\Wishlist\Index::class)->name("wishlist");
 
 Route::get("test", function() {
     return view("test");
@@ -33,7 +35,7 @@ Route::get('/account', function () {
 Route::controller(App\Http\Controllers\Frontend\FrontendController::class)->group(function() {
     Route::get("kategori", "categories");
     Route::get("kategori/{category_slug}", "productCategory")->name("frontend.category.view");
-    Route::get("produk/{product_slug}", "productView")->name("frontend.product.view");
+    // Route::get("produk/{product_slug}", "productView")->name("frontend.product.view");
 });
 
 
@@ -57,8 +59,8 @@ Route::prefix("admin")->middleware(["auth", "isAdmin"])->group(function() {
         Route::put("product/{product_id}", "update")->name("product.update");
     });
     
-    Route::get("brands", App\Http\Livewire\Admin\Brand\Index::class);
-    Route::get("productVariants", App\Http\Livewire\Admin\ProductVariants\Index::class)->name("productVariant");
+    Route::get("brands", App\Livewire\Admin\Brand\Index::class);
+    Route::get("productVariants", App\Livewire\Admin\ProductVariants\Index::class)->name("productVariant");
 
 
 });

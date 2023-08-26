@@ -40,12 +40,12 @@
                                      {{-- @dd($products) --}}
                                      @foreach ($products as $product)
                                          <!-- ltn__product-item -->
-                                         <div class="col-xl-4 col-sm-6 col-12">
+                                         <div class="col-xl-4 col-sm-6 col-12" wire:key="{{str()->random(10)}}">
                                              <div class="ltn__product-item ltn__product-item-3 text-center">
                                                  <div class="product-img">
-                                                     <a href="{{route("frontend.product.view", $product->slug)}}"><img
-                                                             src="{{ asset($product->productImages[0]->image) }}"
-                                                             alt="Thumbanail"></a>
+                                                     <a href="{{route("frontend.product.view", $product->slug)}}">
+                                                        <img wire:ignore src="{{ asset($product->productImages[0]->image) }}" alt="Thumbanail">
+                                                    </a>
                                                      <div class="product-badge">
                                                          <ul>
                                                              <li class="sale-badge">Sale</li>
@@ -67,7 +67,7 @@
                                                              </li>
                                                              <li>
                                                                  <a href="#" title="Wishlist" data-toggle="modal"
-                                                                     data-target="#liton_wishlist_modal">
+                                                                     data-target="#liton_wishlist_modal" wire:click="addToWishlist({{$product->id}})">
                                                                      <i class="far fa-heart"></i></a>
                                                              </li>
                                                          </ul>
@@ -94,10 +94,10 @@
                                     {{-- @dd($products) --}}
                                      @foreach ($products as $product)
                                          <!-- ltn__product-item -->
-                                         <div class="col-lg-12">
+                                         <div class="col-lg-12" wire:key="{{str()->random(10)}}">
                                              <div class="ltn__product-item ltn__product-item-3">
                                                  <div class="product-img">
-                                                     <a href="product-details.html"><img
+                                                     <a href="product-details.html"><img wire:ignore
                                                              src="{{ asset($product->productImages[0]->image) }}"
                                                              alt="#"></a>
                                                      <div class="product-badge">
@@ -143,7 +143,7 @@
                                                              </li>
                                                              <li>
                                                                  <a href="#" title="Wishlist" data-toggle="modal"
-                                                                     data-target="#liton_wishlist_modal">
+                                                                     data-target="#liton_wishlist_modal" wire:click="addToWishlist({{$product->id}})">
                                                                      <i class="far fa-heart"></i></a>
                                                              </li>
                                                          </ul>
@@ -172,7 +172,7 @@
                                      <li><a href="{{ 'kategori' }}">All Category <span><i
                                                      class="fas fa-long-arrow-alt-right"></i></span></a></li>
                                      @foreach ($categories as $category)
-                                         <li><a href="{{ "kategori/$category->slug" }}">{{ $category->name }} <span><i
+                                         <li wire:key="{{str()->random(10)}}"><a href="{{ "kategori/$category->slug" }}">{{ $category->name }} <span><i
                                                          class="fas fa-long-arrow-alt-right"></i></span></a></li>
                                      @endforeach
                                  </ul>
@@ -341,4 +341,9 @@
          </div>
      </div>
     @include("components.modal-view")
+    @include("components.modal-cart")
+    {{-- @include("components.modal-wishlist") --}}
 </div>
+
+
+

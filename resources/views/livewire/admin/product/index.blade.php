@@ -13,7 +13,7 @@
                 </div>
                 <div wire:loading.remove>
 
-                    <form wire:submit.prevent="destroyProduct">
+                    <form wire:submit="destroyProduct">
                         <div class="modal-body text-white">
                             <p>Anda yakin ingin menghapus menghapus produk ini ?</p>
                         </div>

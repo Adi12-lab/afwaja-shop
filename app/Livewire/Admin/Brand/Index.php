@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Brand;
+namespace App\Livewire\Admin\Brand;
 
 use App\Models\Brand;
 use App\Models\Category;
@@ -40,7 +40,7 @@ class Index extends Component
         ]);
 
         session()->flash("message", "Brand Added Successfully");
-        $this->dispatchBrowserEvent("close-modal");
+        $this->dispatch("close-modal");
         $this->resetInput();
     }  
     
@@ -72,7 +72,7 @@ class Index extends Component
         ]);
         session()->flash("message", "Brand Updated Successfully");
 
-        $this->dispatchBrowserEvent("close-modal");
+        $this->dispatch("close-modal");
         $this->resetInput();
 
     }  
@@ -84,7 +84,7 @@ class Index extends Component
     public function destroyBrand() {
         Brand::findOrFail($this->brand_id)->delete();
         session()->flash("message", "Brand Deleted Successfully");
-        $this->dispatchBrowserEvent("close-modal");
+        $this->dispatch("close-modal");
         $this->resetInput();
     }
     
