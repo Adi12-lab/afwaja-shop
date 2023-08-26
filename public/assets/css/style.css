@@ -3257,7 +3257,8 @@ ul.wp-block-latest-posts.is-grid.alignwide {
       background-color: var(--section-bg-1);
       font-weight: 700;
       font-family: var(--ltn__heading-font); }
-      .ltn__tagcloud-widget ul li a:hover {
+      .ltn__tagcloud-widget ul li a:hover,
+      .ltn__tagcloud-widget ul li a.active {
         background-color: var(--ltn__secondary-color);
         color: var(--white); }
 
@@ -3278,7 +3279,8 @@ ul.wp-block-latest-posts.is-grid.alignwide {
       width: 40px;
       height: 22px;
       display: block; }
-    .ltn__color-widget ul li:hover {
+    .ltn__color-widget ul li:hover,
+    .ltn__color-widget ul li.active {
       outline: 2px solid var(--ltn__secondary-color);
       outline-offset: 1px; }
   .ltn__color-widget ul .black {

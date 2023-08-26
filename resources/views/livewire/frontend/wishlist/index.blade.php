@@ -51,6 +51,7 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
+                               
                             </table>
                         </div>
                     </div>
@@ -60,3 +61,11 @@
     </div>
     <!-- WISHLIST AREA START -->
 </div>
+
+
+{{-- <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores hic iste voluptas facilis sint obcaecati officia suscipit minima esse nesciunt, nemo quod aliquid qui! Nihil vitae atque necessitatibus laborum nulla!
+</p>
+<p>
+    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cum adipisci, ullam ad sunt natus, repellendus facere ab neque nam architecto dolor omnis unde nesciunt? Incidunt, dolore doloremque nulla in eveniet laudantium libero. Sint aut quisquam odio dolores adipisci! Distinctio, illo totam voluptatem eaque dolorum eveniet nobis culpa error id necessitatibus ad voluptatum magni!
+</p> --}}

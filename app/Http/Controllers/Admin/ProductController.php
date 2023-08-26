@@ -91,9 +91,9 @@ class ProductController extends Controller
     
             // Hapus gambar
             $validatedData["previous_image"] = $validatedData["previous_image"] ?? null;
-            // dd(isset($validatedData["previous_image"]));
+            // dd($validatedData["previous_image"]);
             if(isset($validatedData["previous_image"])) {
-                $deleteImages = ProductImage::whereNotIn("id", $validatedData["previous_image"])->get();
+                $deleteImages = ProductImage::whereNotIn("id", $validatedData["previous_image"])->where("product_id", $product_id)->get();
                 if(count($deleteImages) > 0) {//jika ada hasilnya
                     foreach($deleteImages as $deleteImage) {
                         if(File::exists($deleteImage->image)) {

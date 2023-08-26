@@ -44,7 +44,7 @@
                                              <div class="ltn__product-item ltn__product-item-3 text-center">
                                                  <div class="product-img">
                                                      <a href="{{route("frontend.product.view", $product->slug)}}">
-                                                        <img wire:ignore src="{{ asset($product->productImages[0]->image) }}" alt="Thumbanail">
+                                                        <img wire:ignore src="{{ asset($product->productImages[0]->image ?? null) }}" alt="Thumbanail">
                                                     </a>
                                                      <div class="product-badge">
                                                          <ul>
@@ -98,7 +98,7 @@
                                              <div class="ltn__product-item ltn__product-item-3">
                                                  <div class="product-img">
                                                      <a href="product-details.html"><img wire:ignore
-                                                             src="{{ asset($product->productImages[0]->image) }}"
+                                                             src="{{ asset($product->productImages[0]->image ?? null) }}"
                                                              alt="#"></a>
                                                      <div class="product-badge">
                                                          <ul>

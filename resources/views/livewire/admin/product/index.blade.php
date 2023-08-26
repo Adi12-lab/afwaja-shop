@@ -64,7 +64,7 @@
                                 @endif
                             </td>
                             <td>
-                                <img src="{{asset($product->productImages[0]->image)}}" width="120">
+                                <img src="{{asset($product->productImages[0]->image ?? null)}}" width="120">
                             </td>
                             <td>
                                 @if ($product->isNew === 1)

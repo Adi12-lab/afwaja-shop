@@ -18,7 +18,7 @@ class AdminMiddleware
     {
 
         if(!Auth::user()->role_as == 1) {
-            return to_route("admin.dashboard");
+            return to_route("home");
         }
         return $next($request);
     }

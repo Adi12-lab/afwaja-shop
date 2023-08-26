@@ -42,10 +42,18 @@
                                     </div>
                                     <h3>{{ $product->name }}</h3>
                                     <div class="product-price">
-                                        <span>{{ rupiah($product->productVariants[0]->selling_price) }}</span>
-                                        @isset($product->productVariants[0]->original_price)
-                                            <del>{{ rupiah($product->productVariants[0]->original_price) }}</del>
-                                        @endisset
+                                        @if ($selected_size['selling_price'] > 0)
+                                            <span>{{ rupiah($selected_size['selling_price']) }}</span>
+                                        @else
+                                            <span>{{ rupiah($product->productVariants[0]->selling_price) }}</span>
+                                        @endif
+
+                                        @if ($selected_size['original_price'] > 0)
+                                            <del>{{ rupiah($selected_size['original_price']) }}</del>
+                                        @elseif($selected_size['original_price'] === 0 && $selected_size["selling_price"] === 0) 
+                                        {{-- Jika original price yang terselect masih 0 dan selling_price yang terpilih masih 0 --}}
+                                            <del> {{ rupiah($product->productVariants[0]->original_price) }}<del>
+                                        @endif
                                     </div>
                                     <div class="modal-product-meta ltn__product-details-menu-1">
                                         <ul>
@@ -56,6 +64,34 @@
                                                 </span>
                                             </li>
                                         </ul>
+                                        <!-- Size Widget -->
+                                        <div class="ltn__tagcloud-widget">
+                                            <h5>Ukuran</h5>
+                                            <ul>
+                                                @foreach ($size_available as $sizeItem)
+                                                    <li wire:key="{{ str()->random(11) }}">
+                                                        <a class="{{ $selected_size['name'] === $sizeItem['size'] ? 'active' : '' }}"
+                                                            wire:click.prevent="selectSize('{{ $sizeItem['size'] }}')">
+                                                            {{ $sizeItem['size'] }}
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        <div class="ltn__color-widget mt-4">
+                                            <h5>Varian</h5>
+                                            <ul>
+                                                @foreach ($variant_available as $variantItem)
+                                                    <li wire:key="{{ str()->random(11) }}"
+                                                        class="{{ $selected_variant["code"] === $variantItem['code'] ? 'active' : '' }}"
+                                                        style="background-color: {{ $variantItem['code'] }}">
+                                                        <a href="#"
+                                                            wire:click.prevent="selectVariant('{{ $variantItem['code'] }}')"></a>
+                                                    </li>
+                                                @endforeach
+
+                                            </ul>
+                                        </div>
                                     </div>
                                     <div class="ltn__product-details-menu-2">
                                         <ul>
@@ -69,7 +105,7 @@
                                             </li>
                                             <li>
                                                 <a href="#" class="theme-btn-1 btn btn-effect-1"
-                                                    title="Add to Cart" data-toggle="modal"
+                                                    wire:click="addToCart" title="Add to Cart" data-toggle="modal"
                                                     data-target="#add_to_cart_modal">
                                                     <i class="fas fa-shopping-cart"></i>
                                                     <span>ADD TO CART</span>
@@ -94,21 +130,7 @@
                                         </ul>
                                     </div>
                                     <hr>
-                                    <div class="ltn__social-media">
-                                        <ul>
-                                            <li>Share:</li>
-                                            <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                                            </li>
-                                            <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                                            </li>
-                                            <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a>
-                                            </li>
-                                            <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                                            </li>
 
-                                        </ul>
-                                    </div>
-                                    <hr>
                                     <div class="ltn__safe-checkout">
                                         <h5>Guaranteed Safe Checkout</h5>
                                         <img src="img/icons/payment-2.png" alt="Payment Image">
@@ -129,7 +151,7 @@
                             <div class="tab-pane fade active show" id="liton_tab_details_1_1">
                                 <div class="ltn__shop-details-tab-content-inner">
                                     <h4 class="title-2">Lorem ipsum dolor sit amet elit.</h4>
-                                    {{ $product->description }}
+                                    {!! $product->description !!}
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="liton_tab_details_1_2">
@@ -291,7 +313,8 @@
                     <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar">
                         <!-- Banner Widget -->
                         <div class="widget ltn__banner-widget">
-                            <img wire:ignore src="{{asset($product->productImages->last()->image)}}" alt="#">
+                            <img wire:ignore src="{{ asset($product->productImages->last()->image) }}"
+                                alt="#">
                         </div>
                     </aside>
                 </div>
