@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Livewire\Frontend\Wishlist;
+namespace App\Livewire\Frontend\Cart;
 
 use App\Models\Product;
+
 use Livewire\Component;
 use Livewire\Attributes\On; 
 
@@ -12,19 +13,21 @@ class Alert extends Component
     public Product $product;
     public $message;
     
-    #[On('wishlistAlert')]
+    #[On('cartAlert')]
     public function trigger($message) {
-        $this->product = Product::findOrFail($message["product_id"]);
+        if(isset($message["product_id"])) {
+            $this->product = Product::findOrFail($message["product_id"]);
+        }
         $this->message = $message;
     }
 
-    #[On("onHideWishlistAlert")]
+    #[On("onHideCartAlert")]
     public function resetProp() {
         $this->reset("product", "message");
     }
 
     public function render()
     {
-        return view('livewire.frontend.wishlist.alert');
+        return view('livewire.frontend.cart.alert');
     }
 }

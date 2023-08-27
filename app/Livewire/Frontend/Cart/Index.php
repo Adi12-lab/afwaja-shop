@@ -3,15 +3,14 @@
 namespace App\Livewire\Frontend\Cart;
 
 use App\Models\Cart;
-use Illuminate\Support\Facades\Auth;
+
 use Livewire\Component;
 use Livewire\Attributes\On;
-class CartUtilize extends Component
+use Illuminate\Support\Facades\Auth;
+class Index extends Component
 {
 
-    public $cartContent;
-
-    public $totalPrice = 0;
+    public $cartContent, $totalPrice = 0;
 
     #[On('cartChanged')]
     public function checkCart() {
@@ -26,9 +25,9 @@ class CartUtilize extends Component
         $cartRemoveData = Cart::where("user_id", auth()->user()->id)->where("id", $cartId)->first();
 
         if($cartRemoveData) {
-            $cartRemoveData->delete();
+            // $cartRemoveData->delete();
 
-            $this->dispatch("cartChanged");
+            // $this->dispatch("cartChanged");
             $this->dispatch("cartAlert", message: [
                 "text" => "Item berhasil dihapus",
                 "type" => "success",
@@ -48,8 +47,9 @@ class CartUtilize extends Component
     public function render()
     {
         $this->cartContent = $this->checkCart();
-        return view('livewire.frontend.cart.cart-utilize')->with([
-            "cartContent" => $this->cartContent,
-        ]);
+        return view('livewire.frontend.cart.index')
+                ->with(["cartContent" => $this->cartContent])
+                ->extends("layouts.app")
+                ->section("main");
     }
 }

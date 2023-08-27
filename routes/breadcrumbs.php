@@ -28,6 +28,10 @@ Breadcrumbs::for("wishlist", function(BreadcrumbTrail $trail ) {
     $trail->parent("/");
     $trail->push("Favorit", route("wishlist"));
 });
+Breadcrumbs::for("cart", function(BreadcrumbTrail $trail ) {
+    $trail->parent("/");
+    $trail->push("Keranjang", route("cart"));
+});
 
 // // Home > Blog > [Category]
 // Breadcrumbs::for('category', function (BreadcrumbTrail $trail, $category) {

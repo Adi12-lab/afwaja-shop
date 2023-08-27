@@ -668,6 +668,7 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="submit"],
+
 textarea {
   background-color: var(--white);
   border: 2px solid;
@@ -701,7 +702,16 @@ textarea:focus {
 input[type="password"] {
   letter-spacing: 3px;
   font-size: 16px; }
+  
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+         -webkit-appearance: none;
+          margin: 0;
+  }
 
+  input[type=number] {
+      -moz-appearance: textfield;
+  }
 textarea {
   resize: vertical;
   padding: 15px 20px;

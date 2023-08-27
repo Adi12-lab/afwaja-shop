@@ -1,69 +1,44 @@
 <?php
 
-namespace App\Livewire\Frontend\Product;
+namespace App\Livewire\Frontend;
 
-use App\Models\Category;
 use App\Models\Product;
-use App\Models\Wishlist;
-use App\Models\ProductVariant;
 use App\Models\Cart;
-
+use App\Models\ProductVariant;
 use Livewire\Component;
-use Livewire\WithPagination;
+use Livewire\Attributes\On; 
 use Illuminate\Support\Facades\Auth;
-
-class Index extends Component
+class QuickView extends Component
 {
-    use WithPagination;
 
-    protected $paginationTheme = 'custom';
+    public $product;
+    public int $quantity = 1;
 
-  
-    public function addToWishlist(int $productId) {
-        if(Auth::check()) {
+    public function increment() {
+        $this->quantity++;
+    }
+    public function decrement() {
+        $this->quantity--;
+    }
 
-            if(Wishlist::where("user_id", auth()->user()->id)->where("product_id", $productId)->exists()) {
-                $this->dispatch("wishlistAlert", message: [
-                    "text" => "Sudah ditambahkan ke Favorit",
-                    "type" => "warning",
-                    "product_id" => $productId, 
-                    "status" => 409
-               ]);
-                return false; 
-
-            }
-             else {
-                Wishlist::create([
-                     "user_id" => auth()->user()->id,
-                     "product_id" => $productId
-                 ]);
-                $this->dispatch("wishlistAlert", message: [
-                    "text" => "Produk berhasil ditambhkan ke Favorit",
-                    "type" => "success",
-                    "product_id" => $productId, 
-                    "status" => 200
-               ]);
-                 return true;
-             }
-        }
-        else {
-            return to_route("login");
-
-        }
+    #[On('quickViewTrigger')]
+    public function trigger(int $product_id) {
+        return $this->product = Product::find($product_id);
     }
 
     public function addToCart(int $productId) {
         if(Auth::check()) {
-            if(Product::where("id", $productId)->where("status", 0)->exists()) {//gak logis
+            if($this->product->where("id", $productId)->where("status", 0)->exists()) {
                 $cekVariant = ProductVariant::where("product_id", $productId)->where("quantity", ">", 0)->first();
                 if($cekVariant) {
-                        if(1 <= $cekVariant->quantity) {
+                    if($this->quantity > 0) {
+                        if($this->quantity <= $cekVariant->quantity) {
                             $existsCart = Cart::
                                         where("product_id", $productId)
                                         ->where("product_variant_id", $cekVariant->id)->where("user_id", auth()->user()->id)->first();
 
                             if($existsCart) {
-                                $existsCart->increment("quantity", 1);
+                                $existsCart->increment("quantity", $this->quantity);
                                 $this->dispatch("cartChanged");
                                 $this->dispatch("cartAlert", message: [
                                     "text" => "Jumlah kuantitas berhasil ditambah",
@@ -76,7 +51,7 @@ class Index extends Component
                                     "user_id" => auth()->user()->id,
                                     "product_id" => $productId,
                                     "product_variant_id" => $cekVariant->id,
-                                    "quantity" =>  1
+                                    "quantity" =>  $this->quantity
                                 ]);
                                 $this->dispatch("cartChanged");
                                 $this->dispatch("cartAlert", message: [
@@ -95,6 +70,14 @@ class Index extends Component
                                 "status" => 403
                            ]);
                         }
+                    } else {
+                        //dispacth quantity tidak valid
+                        $this->dispatch("cartAlert", message: [
+                            "text" => "Kuantitas tidak valid",
+                            "type" => "error",
+                            "status" => 403
+                       ]);
+                    }
                 } else {
                     //dispacth something is went wrong
                     $this->dispatch("cartAlert", message: [
@@ -110,16 +93,10 @@ class Index extends Component
         }
     }
 
-    
-
     public function render()
     {
-        $products = Product::with(["productVariants", "productImages"])->paginate(1);
-        $categories = Category::all();
-        return view('livewire.frontend.product.index', [
-            "products" => $products,
-            "categories" => $categories
-        ])->extends("layouts.app")->section("main");
+        return view('livewire.frontend.quick-view')->with([
+            "product" => $this->product
+        ]);
     }
-
 }

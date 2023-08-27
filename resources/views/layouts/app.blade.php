@@ -39,6 +39,8 @@
 
         @include('layouts.inc.frontend.feature')
         @include('layouts.inc.frontend.footer')
+        <livewire:frontend.quick-view />
+        <livewire:frontend.cart.alert />
         <livewire:frontend.wishlist.alert />
     </div>
 

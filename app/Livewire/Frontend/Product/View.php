@@ -1,16 +1,22 @@
 <?php
 namespace App\Livewire\Frontend\Product;
 
-use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\Cart;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class View extends Component {
 
     public Product $product, $product_quick_view;
 
-    public $size_available, $variant_available, $globalVariants;    
+    public $size_available, $variant_available;
+
+    #[Locked] 
+    public $globalVariants;   
+
     public $selected_size = [
         "name" => null,
         "selling_price" => 0,
@@ -97,14 +103,71 @@ class View extends Component {
                                     })->values()->collapse();
     }
 
-    public function addToCart() {
-        $dataForCart = [
-            "name" => $this->selected_variant["name"],
-            "code" => $this->selected_variant["code"],
-            "size" => $this->selected_size["name"], 
-            "quantity" => $this->quantity
-        ];
-        dd($dataForCart);
+    public function addToCart(int $productId) {
+        if(Auth::check()) {
+            if($this->product->where("id", $productId)->where("status", 0)->exists()) {
+                $cekVariant = $this->globalVariants->where("size", $this->selected_size["name"])->where("code", $this->selected_variant["code"])->first();
+                if($cekVariant) {
+                    if($this->quantity > 0) {
+                        if($this->quantity <= $cekVariant->quantity) {
+                            $existsCart = Cart::
+                                        where("product_id", $productId)
+                                        ->where("product_variant_id", $cekVariant->id)->where("user_id", auth()->user()->id)->first();
+
+                            if($existsCart) {
+                                $existsCart->increment("quantity", $this->quantity);
+                                $this->dispatch("cartChanged");
+                                $this->dispatch("cartAlert", message: [
+                                    "text" => "Jumlah kuantitas berhasil ditambah",
+                                    "type" => "success",
+                                    "product_id" => $productId, 
+                                    "status" => 200
+                               ]);
+                            } else {
+                                Cart::create([
+                                    "user_id" => auth()->user()->id,
+                                    "product_id" => $productId,
+                                    "product_variant_id" => $cekVariant->id,
+                                    "quantity" =>  $this->quantity
+                                ]);
+                                $this->dispatch("cartChanged");
+                                $this->dispatch("cartAlert", message: [
+                                    "text" => "Produk berhasil ditambahkan",
+                                    "type" => "success",
+                                    "product_id" => $productId, 
+                                    "status" => 201
+                               ]);
+
+                            }
+                        } else {
+                            //dispatch quantity tidak cukup
+                            $this->dispatch("cartAlert", message: [
+                                "text" => "Kuantitas melebihi stok $cekVariant->quantity",
+                                "type" => "error",
+                                "status" => 403
+                           ]);
+                        }
+                    } else {
+                        //dispacth quantity tidak valid
+                        $this->dispatch("cartAlert", message: [
+                            "text" => "Kuantitas tidak valid",
+                            "type" => "error",
+                            "status" => 403
+                       ]);
+                    }
+                } else {
+                    //dispacth something is went wrong
+                    $this->dispatch("cartAlert", message: [
+                        "text" => "Ada yang salah",
+                        "type" => "error",
+                        "status" => 500
+                   ]);
+                }
+            }
+        } else {
+            return to_route("login");
+
+        }
     }
     public function quickView(int $product_id) {
         $this->product_quick_view = Product::find($product_id);

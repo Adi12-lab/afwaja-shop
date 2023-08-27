@@ -64,6 +64,7 @@
                                                 </span>
                                             </li>
                                         </ul>
+                                        @if(isset($size_available[0]["size"]))
                                         <!-- Size Widget -->
                                         <div class="ltn__tagcloud-widget">
                                             <h5>Ukuran</h5>
@@ -92,6 +93,7 @@
 
                                             </ul>
                                         </div>
+                                        @endif
                                     </div>
                                     <div class="ltn__product-details-menu-2">
                                         <ul>
@@ -99,13 +101,13 @@
                                                 <div class="cart-plus-minus">
                                                     <button class="dec qtybutton" wire:click="decrement">-</button>
                                                     <input type="text" value="1" name="qtybutton"
-                                                        class="cart-plus-minus-box">
+                                                        class="cart-plus-minus-box" wire:model="quantity">
                                                     <button class="inc qtybutton" wire:click="increment">+</button>
                                                 </div>
                                             </li>
                                             <li>
                                                 <a href="#" class="theme-btn-1 btn btn-effect-1"
-                                                    wire:click="addToCart" title="Add to Cart" data-toggle="modal"
+                                                    wire:click="addToCart({{$product->id}})" title="Add to Cart" data-toggle="modal"
                                                     data-target="#add_to_cart_modal">
                                                     <i class="fas fa-shopping-cart"></i>
                                                     <span>ADD TO CART</span>
@@ -397,6 +399,4 @@
     </div>
     <!-- PRODUCT SLIDER AREA END -->
     @include('components.modal-view')
-    @include('components.modal-cart')
-    {{-- @include('components.modal-wishlist') --}}
 </div>

@@ -21,7 +21,12 @@ use App\Http\Controllers\Admin\DashboardController;
 Route::get("/", App\Livewire\Frontend\Index::class)->name("home");
 Route::get("produk", App\Livewire\Frontend\Product\Index::class)->name("frontend.product.index");
 Route::get("produk/{product:slug}", App\Livewire\Frontend\Product\View::class)->name("frontend.product.view");
-Route::get("favorit", App\Livewire\Frontend\Wishlist\Index::class)->middleware(["auth"])->name("wishlist");
+
+Route::middleware(["auth"])->group(function() {
+    Route::get("favorit", App\Livewire\Frontend\Wishlist\Index::class)->name("wishlist");
+    Route::get("keranjang", App\Livewire\Frontend\Cart\Index::class)->name("cart");
+});
+
 
 Route::get("test", function() {
     return view("test");

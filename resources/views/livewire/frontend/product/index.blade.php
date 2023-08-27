@@ -55,13 +55,13 @@
                                                          <ul>
                                                              <li>
                                                                  <a href="#" title="Quick View" data-toggle="modal"
-                                                                     data-target="#quick_view_modal" wire:click="quickView({{$product->id}})">
+                                                                     data-target="#quick_view_modal" wire:click="$dispatch( 'quickViewTrigger', {product_id :  {{$product->id}} })">
                                                                      <i class="far fa-eye"></i>
                                                                  </a>
                                                              </li>
                                                              <li>
                                                                  <a href="#" title="Add to Cart" data-toggle="modal"
-                                                                     data-target="#add_to_cart_modal">
+                                                                     data-target="#add_to_cart_modal" wire:click="addToCart({{$product->id}})">
                                                                      <i class="fas fa-shopping-cart"></i>
                                                                  </a>
                                                              </li>
@@ -128,25 +128,25 @@
                                                      </div>
     
                                                      <div class="product-hover-action">
-                                                         <ul>
-                                                             <li>
-                                                                 <a href="#" title="Quick View" data-toggle="modal"
-                                                                     data-target="#quick_view_modal" wire:click="quickView({{$product->id}})">
-                                                                     <i class="far fa-eye"></i>
-                                                                 </a>
-                                                             </li>
-                                                             <li>
-                                                                 <a href="#" title="Add to Cart" data-toggle="modal"
-                                                                     data-target="#add_to_cart_modal">
-                                                                     <i class="fas fa-shopping-cart"></i>
-                                                                 </a>
-                                                             </li>
-                                                             <li>
-                                                                 <a href="#" title="Wishlist" data-toggle="modal"
-                                                                     data-target="#liton_wishlist_modal" wire:click="addToWishlist({{$product->id}})">
-                                                                     <i class="far fa-heart"></i></a>
-                                                             </li>
-                                                         </ul>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#" title="Quick View" data-toggle="modal"
+                                                                    data-target="#quick_view_modal" wire:click="$dispatch( 'quickViewTrigger', {product_id :  {{$product->id}} })">
+                                                                    <i class="far fa-eye"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" title="Add to Cart" data-toggle="modal"
+                                                                    data-target="#add_to_cart_modal" wire:click="addToCart({{$product->id}})">
+                                                                    <i class="fas fa-shopping-cart"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" title="Wishlist" data-toggle="modal"
+                                                                    data-target="#liton_wishlist_modal" wire:click="addToWishlist({{$product->id}})">
+                                                                    <i class="far fa-heart"></i></a>
+                                                            </li>
+                                                        </ul>
                                                      </div>
                                                  </div>
                                              </div>
@@ -340,9 +340,7 @@
              </div>
          </div>
      </div>
-    @include("components.modal-view")
-    @include("components.modal-cart")
-    {{-- @include("components.modal-wishlist") --}}
+ 
 </div>
 
 

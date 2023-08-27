@@ -16,32 +16,34 @@
                         </div>
 
                         <div wire:loading.remove class="ltn__quick-view-modal-inner">
-                            @if (isset($product) && isset($message))
+                            @if (isset($message))
                                 <div class="modal-product-item">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="modal-product-img">
-                                                <img src="{{ asset($product->productImages[0]->image) }}"
-                                                    alt="#">
-                                            </div>
+                                            @isset($product)
+                                                <div class="modal-product-img">
+                                                    <img src="{{ asset($product->productImages[0]->image) }}"
+                                                        alt="image">
+                                                </div>
+                                            @endisset
                                             <div class="modal-product-info">
-                                                <h5><a href="product-details.html">{{ $product->name }}</a></h5>
-                                                <p class="added-cart"><i class="fa fa-check-circle"></i>
-                                                    {{ $message['text'] }}</p>
-                                                <div class="btn-wrapper">
-                                                    <a href="{{ route('wishlist') }}"
-                                                        class="theme-btn-1 btn btn-effect-1">Lihat Favorit</a>
-                                                </div>
+                                                @if ($message['type'] !== 'error' && isset($product))
+                                                    <h5>
+                                                        <a href="{{ route('frontend.product.view', $product->slug) }}">{{ $product->name }}</a>
+                                                    </h5>
+                                                    <p class="added-cart">
+                                                        <i class="fa fa-check-circle"></i>
+                                                        {{ $message['text'] }}
+                                                    </p>
+                                                    <div class="btn-wrapper">
+                                                        <a href="{{ route('wishlist') }}" class="theme-btn-1 btn btn-effect-1">Lihat Favorit</a>
+                                                    </div>
+                                                @else
+                                                    <p class="added-cart"><i class="fa fa-check-circle mr-3"></i>{{ $message['text'] }}
+                                                    </p>
+                                                @endif
                                             </div>
-                                            <!-- additional-info -->
-                                            <div class="additional-info d-none">
-                                                <p>We want to give you <b>10% discount</b> for your first order, <br>
-                                                    Use
-                                                    discount code at checkout</p>
-                                                <div class="payment-method">
-                                                    <img src="img/icons/payment.png" alt="#">
-                                                </div>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -61,16 +63,7 @@
             $('#liton_wishlist_modal').on('hidden.bs.modal', function(e) {
                 Livewire.dispatch('onHideWishlistAlert')
             })
-            Livewire.on("wishlistRemoved", ({
-                message
-            }) => {
-                Swal.fire(
-                    message.text,
-                    '',
-                    message.type
-                )
 
-            })
         })
     </script>
 @endpush
