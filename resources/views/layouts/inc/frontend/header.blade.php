@@ -107,7 +107,7 @@
                                                <li><a href="{{route('login')}}">Login</a></li>
                                                <li><a href="{{route('register')}}">Registrasi</a></li>
                                            @else
-                                               <li><a href="{{route('dashboard')}}">My Account</a></li>
+                                               <li><a href="{{route('profil')}}">My Account</a></li>
                                                <li><a href="{{route("wishlist")}}">Wishlist</a></li>
                                                <li>
                                                    <form action="{{ route('logout') }}" method="POST">

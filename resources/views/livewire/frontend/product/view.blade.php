@@ -108,7 +108,8 @@
                                             <li>
                                                 <a href="#" class="theme-btn-1 btn btn-effect-1"
                                                     wire:click="addToCart({{$product->id}})" title="Add to Cart" data-toggle="modal"
-                                                    data-target="#add_to_cart_modal">
+                                                    data-target="#add_to_cart_modal"
+                                                    wire:loading.disabled wire:target="addToCart">
                                                     <i class="fas fa-shopping-cart"></i>
                                                     <span>ADD TO CART</span>
                                                 </a>
@@ -119,9 +120,10 @@
                                         <ul>
                                             <li>
                                                 <a href="#" title="Wishlist" data-toggle="modal"
-                                                    data-target="#liton_wishlist_modal">
+                                                    data-target="#liton_wishlist_modal"
+                                                    wire:click="addToWishlist({{$product->id}})">
                                                     <i class="far fa-heart"></i>
-                                                    <span>Add to Wishlist</span>
+                                                    <span>Favorit</span>
                                                 </a>
                                             </li>
                                             <li>
@@ -398,5 +400,4 @@
         </div>
     </div>
     <!-- PRODUCT SLIDER AREA END -->
-    @include('components.modal-view')
 </div>

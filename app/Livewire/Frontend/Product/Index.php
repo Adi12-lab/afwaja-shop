@@ -60,7 +60,8 @@ class Index extends Component
                         if(1 <= $cekVariant->quantity) {
                             $existsCart = Cart::
                                         where("product_id", $productId)
-                                        ->where("product_variant_id", $cekVariant->id)->where("user_id", auth()->user()->id)->first();
+                                        ->where("product_variant_id", $cekVariant->id)
+                                        ->where("user_id", auth()->user()->id)->first();
 
                             if($existsCart) {
                                 $existsCart->increment("quantity", 1);
@@ -110,11 +111,9 @@ class Index extends Component
         }
     }
 
-    
-
     public function render()
     {
-        $products = Product::with(["productVariants", "productImages"])->paginate(1);
+        $products = Product::with(["productVariants", "productImages"])->paginate(12);
         $categories = Category::all();
         return view('livewire.frontend.product.index', [
             "products" => $products,

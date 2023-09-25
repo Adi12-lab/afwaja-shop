@@ -21,6 +21,45 @@ class Index extends Component
         return null;
     }
 
+
+    public function decrementQuantity(int $cartId) {
+        $cartData = Cart::where("id", $cartId)->where("user_id", auth()->user()->id)->first();
+
+        if($cartData) {
+                if($cartData->quantity > 1) {
+                    $cartData->decrement("quantity");
+                } 
+    }
+}
+    public function incrementQuantity(int $cartId) {
+        $cartData = Cart::where("id", $cartId)->where("user_id", auth()->user()->id)->first();
+
+        if($cartData) {
+
+            if( $cartData->productVariant()->where("id", $cartData->product_variant_id)->exists()) {//jika ada warnanya
+                $productVariant = $cartData->productVariant()->where("id", $cartData->product_variant_id)->first();
+                if($productVariant->quantity > $cartData->quantity) {
+                    $cartData->increment("quantity");
+                } else {
+                    $this->dispatch("sweetAlert", message : [
+                        "text" => "Kuantitas hanya $productVariant->quantity yang tersedia",
+                        "type" => "warning",
+                        "status" => 403
+                    ]);
+                }
+            }
+        
+        } else {
+            $this->dispatch("sweetAlert", message :  [
+                "text" => "Something went wrong",
+                "type" => "error",
+                "status" => 404
+            ]);
+        }
+    }
+
+
+
     public function removeCartItem(int $cartId) {
         $cartRemoveData = Cart::where("user_id", auth()->user()->id)->where("id", $cartId)->first();
 

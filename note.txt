@@ -1,0 +1,3 @@
+Bug cart
+Jika hanya satu produk di cart utilize maka saat menghapus atau menambahkan lancar,
+akan tetapi jika sudah ada 2 produk di cartUtilize, maka saat menghapus aatau menambahkan tidak bisa langsung bisa tertambah

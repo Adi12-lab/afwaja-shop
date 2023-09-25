@@ -8,10 +8,7 @@
     <!--favicon-->
     <link rel="icon" href="{{ asset('admin/images/favicon-32x32.png') }}" type="image/png" />
     <!--plugins-->
-    @livewireStyles
     @yield('style')
-    <link href="{{ asset('admin/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
-    <link href="{{ asset('admin/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
     <link href="{{ asset('admin/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
     <!-- loader-->
     <link href="{{ asset('admin/css/pace.min.css') }}" rel="stylesheet" />
@@ -27,6 +24,8 @@
     <link rel="stylesheet" href="{{ asset('admin/css/header-colors.css') }}" />
 
     <title>Syndron - Bootstrap5 Admin Template</title>
+    @livewireStyles
+
 </head>
 
 <body>
@@ -38,9 +37,15 @@
         <!--navigation-->
         @include('layouts.inc.admin.nav')
         <!--end navigation-->
+
         <!--start page wrapper -->
-        @yield('wrapper')
+        <div class="page-wrapper">
+            <div class="page-content">
+                @yield('wrapper')
+            </div>
+        </div>
         <!--end page wrapper -->
+        
         <!--start overlay-->
         <div class="overlay toggle-icon"></div>
         <!--end overlay-->
@@ -148,7 +153,6 @@
         </div>
     </div>
     <!--end switcher-->
-    @livewireScripts
     <!-- Bootstrap JS -->
     <script src="{{ asset('admin/js/bootstrap.bundle.min.js') }}"></script>
     <!--plugins-->
@@ -161,6 +165,8 @@
     @yield('script')
     @stack('script')
     @include('layouts.inc.admin.theme-control')
+    @livewireScripts
+
 </body>
 
 </html>

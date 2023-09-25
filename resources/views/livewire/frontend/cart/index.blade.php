@@ -43,10 +43,10 @@
                                         <td class="cart-product-price">{{rupiah($cartItem->productVariant->selling_price)}}</td>
                                         <td class="cart-product-quantity">
                                             <div class="cart-plus-minus">
-                                                <button class="dec qtybutton" wire:click="decrement">-</button>
+                                                <button class="dec qtybutton" wire:click="decrementQuantity({{$cartItem->id}})">-</button>
                                                 <input type="number" name="qtybutton"
                                                     class="cart-plus-minus-box" value="{{$cartItem->quantity}}">
-                                                <button class="inc qtybutton" wire:click="increment">+</button>
+                                                <button class="inc qtybutton" wire:click="incrementQuantity({{$cartItem->id}})">+</button>
                                             </div>
                                         </td>
                                         <td class="cart-product-subtotal">{{rupiah($cartItem->productVariant->selling_price * $cartItem->quantity)}}</td>
@@ -60,6 +60,17 @@
                                         </td>
                                     </tr>
                                   @endforelse
+                                  <tr class="cart-coupon-row">
+                                    <td colspan="6">
+                                        <div class="cart-coupon">
+                                            <input type="text" name="cart-coupon" placeholder="Kode kupon">
+                                            <button type="submit" class="btn theme-btn-2 btn-effect-2">Submit Kupon</button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" onclick="window.location.reload()" class="btn theme-btn-2 btn-effect-2-- disabled">Update Keranjang</button>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -69,24 +80,20 @@
                                 <tbody>
                                     <tr>
                                         <td>Total Harga</td>
-                                        <td>{{$totalPrice}}</td>
+                                        <td>{{rupiah($totalPrice)}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Pengiriman</td>
-                                        <td>Rp 20.000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Vat</td>
+                                        <td>Diskon</td>
                                         <td>$00.00</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Order Total</strong></td>
-                                        <td><strong>$633.00</strong></td>
+                                        <td><strong>Total Pesanan</strong></td>
+                                        <td><strong>{{rupiah($totalPrice)}}</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div class="btn-wrapper text-right">
-                                <a href="checkout.html" class="theme-btn-1 btn btn-effect-1">Proceed to checkout</a>
+                                <a href="checkout.html" class="theme-btn-1 btn btn-effect-1">Proses ke checkout</a>
                             </div>
                         </div>
                     </div>

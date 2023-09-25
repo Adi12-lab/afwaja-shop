@@ -9,19 +9,6 @@
              </div>
              <form wire:submit="storeProductVariant()">
                 <div class="row modal-body">
-                    <div class="mb-3">
-                        <label>Pilih produk</label>
-                        <select wire:model="product_id" class="form-control" required>
-                            <option value="">-- pilih produk --</option>
-
-                           @foreach ($products as $product)
-                                <option value="{{ $product->id }}">{{ $product->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('product_id')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
                     <div class="col-6 mb-3">
                         <label>Nama varian</label>
                         <input type="text" wire:model="name" class="form-control">
@@ -95,19 +82,6 @@
              <div wire:loading.remove>
                  <form wire:submit="updateProductVariant()">
                      <div class="row modal-body">
-                         <div class="mb-3">
-                             <label>Pilih produk</label>
-                             <select wire:model="product_id" class="form-control" required>
-                                 <option value="">-- pilih produk --</option>
-
-                                @foreach ($products as $product)
-                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
-                                 @endforeach
-                             </select>
-                             @error('product_id')
-                                 <small class="text-danger">{{ $message }}</small>
-                             @enderror
-                         </div>
                          <div class="col-6 mb-3">
                              <label>Nama varian</label>
                              <input type="text" wire:model="name" class="form-control">
@@ -124,8 +98,8 @@
                          </div>
                          <div class="col-6 mb-3">
                              <label>Size Varian</label>
-                             <input type="text" wire:model="code" class="form-control">
-                             @error('code')
+                             <input type="text" wire:model="size" class="form-control">
+                             @error('size')
                                  <small class="text-danger">{{ $message }}</small>
                              @enderror
                          </div>

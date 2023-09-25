@@ -2,7 +2,7 @@
 namespace App\Livewire\Frontend\Product;
 
 use App\Models\Product;
-use App\Models\ProductVariant;
+use App\Models\Wishlist;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Locked;
@@ -101,6 +101,38 @@ class View extends Component {
                                             "code" => $item["code"],
                                         ];
                                     })->values()->collapse();
+    }
+
+    public function addToWishlist(int $productId) {
+        if(Auth::check()) {
+
+            if(Wishlist::where("user_id", auth()->user()->id)->where("product_id", $productId)->exists()) {
+                $this->dispatch("wishlistAlert", message: [
+                    "text" => "Sudah ditambahkan ke Favorit",
+                    "type" => "success",
+                    "product_id" => $productId, 
+                    "status" => 409
+               ]);
+                return false; 
+
+            }
+             else {
+                Wishlist::create([
+                     "user_id" => auth()->user()->id,
+                     "product_id" => $productId
+                 ]);
+                $this->dispatch("wishlistAlert", message: [
+                    "text" => "Produk berhasil ditambhkan ke Favorit",
+                    "type" => "success",
+                    "product_id" => $productId, 
+                    "status" => 200
+               ]);
+                 return true;
+             }
+        }
+        else {
+            return to_route("login");
+        }
     }
 
     public function addToCart(int $productId) {

@@ -25,7 +25,7 @@
                          @enderror
                      </div>
                      <div class="mb-3">
-                         <label for="">Arsipkan</label> <br />
+                         <label for="">Aktif</label> <br />
                          <input type="checkbox" wire:model="status">
                          @error('status')
                              <small class="text-danger">{{ $message }}</small>
@@ -77,7 +77,7 @@
                              @enderror
                          </div>
                          <div class="mb-3">
-                             <label for="">Arsipkan</label> <br />
+                             <label for="">Aktif</label> <br />
                              <input type="checkbox" wire:model="status" style="width:20px;height:20px;">
                              @error('status')
                                  <small class="text-danger">{{ $message }}</small>

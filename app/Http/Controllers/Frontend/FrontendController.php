@@ -19,5 +19,9 @@ class FrontendController extends Controller
         $product = Product::where("slug", $product_slug )->first();
         return view("frontend.product.view", compact("product"));
     }
+
+    // public function profile() {
+    //     return view("frontend.profile.index");
+    // }
     
 }

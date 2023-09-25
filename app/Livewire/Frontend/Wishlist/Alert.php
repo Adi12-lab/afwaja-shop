@@ -14,7 +14,9 @@ class Alert extends Component
     
     #[On('wishlistAlert')]
     public function trigger($message) {
-        $this->product = Product::findOrFail($message["product_id"]);
+        if(isset($message["product_id"])) {
+            $this->product = Product::findOrFail($message["product_id"]);
+        }
         $this->message = $message;
     }
 

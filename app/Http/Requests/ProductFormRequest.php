@@ -88,7 +88,7 @@ class ProductFormRequest extends FormRequest
             ],
             "previous_image.*" => [
                 "nullable",
-                "string"
+                "integer"
             ],
             "images" => [
                 "nullable",

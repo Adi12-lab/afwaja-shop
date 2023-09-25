@@ -32,6 +32,12 @@ Breadcrumbs::for("cart", function(BreadcrumbTrail $trail ) {
     $trail->parent("/");
     $trail->push("Keranjang", route("cart"));
 });
+Breadcrumbs::for("profil", function(BreadcrumbTrail $trail ) {
+    $trail->parent("/");
+    $trail->push("Profil Saya", route("profil"));
+});
+
+
 
 // // Home > Blog > [Category]
 // Breadcrumbs::for('category', function (BreadcrumbTrail $trail, $category) {

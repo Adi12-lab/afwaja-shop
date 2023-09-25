@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
             $table->unsignedBigInteger("category_id");
             $table->unsignedBigInteger("brand_id")->nullable();
@@ -19,8 +20,8 @@ return new class extends Migration
             $table->string("slug");
             $table->mediumText("small_description")->nullable();
             $table->longText("description")->nullable();
-            $table->tinyInteger("isNew")->default("0")->comment("1=new, 0=old");
-            $table->tinyInteger("status")->default("0")->comment("1=hidden, 0=visible");
+            $table->boolean("isNew")->default(true)->comment("1=new, 0=old");
+            $table->boolean("status")->default(true)->comment("0=hidden, 1=aktif");
             
             $table->string("meta_title")->nullable();
             $table->mediumText("meta_keyword")->nullable();

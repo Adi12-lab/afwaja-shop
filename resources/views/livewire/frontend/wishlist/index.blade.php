@@ -17,39 +17,48 @@
                                     <th scope="col" class="cart-product-subtotal text-center">Keranjang</th>
                                 </thead>
                                 <tbody>
-                                    @foreach ($wishlists as $wishlistItem)
+                                    @forelse ($wishlists as $wishlistItem)
                                         <tr wire:key="{{ str()->random(10) }}">
                                             <td class="cart-product-remove" 
-                                            wire:click.prevent="removeWishlistItem({{$wishlistItem->id}})" wire:loading.class="text-secondary">
+                                            title="Wishlist" data-toggle="modal"
+                                            data-target="#liton_wishlist_modal"
+                                            wire:click.prevent="removeWishlistItem({{$wishlistItem["wishlist_id"]}})" 
+                                            wire:loading.class="text-secondary"
+                                            >
                                                 x
                                             </td>
                                             <td class="cart-product-image" wire:ignore>
-                                                <a href="{{ route('frontend.product.view', $wishlistItem->product->slug) }}">
-                                                    <img src="{{ asset($wishlistItem->product->productImages[0]->image) }}"
-                                                        alt="{{ $wishlistItem->product->name }}"></a>
+                                                <a href="{{ route('frontend.product.view', $wishlistItem["product_slug"]) }}">
+                                                    <img src="{{ asset($wishlistItem["image"]) }}"
+                                                        alt="{{ $wishlistItem["product_name"] }}"></a>
                                             </td>
                                             <td class="cart-product-info ">
                                                 <h4 class="text-center">
                                                     <a
-                                                        href="{{ route('frontend.product.view', $wishlistItem->product->slug) }}">{{ $wishlistItem->product->name }}</a>
+                                                        href="{{ route('frontend.product.view', $wishlistItem["product_slug"]) }}">{{ $wishlistItem["product_name"] }}</a>
                                                 </h4>
                                             </td>
                                             <td class="cart-product-price text-center">
-                                                {{ rupiah($wishlistItem->product->productVariants[0]->selling_price) }}
+                                                {{ rupiah($wishlistItem["selling_price"]) }}
                                             </td>
                                             <td class="cart-product-stock text-center">
-                                                @if ($wishlistItem->product->productVariants[0]->quantity > 0)
+                                                @if ($wishlistItem["quantity"] > 0)
                                                     <span class="text-success">Tersedia</span>
                                                 @else
-                                                    <span class="text-danger">Tersedia</span>
+                                                    <span class="text-danger">Habis</span>
                                                 @endif
                                             </td>
                                             <td class="cart-product-add-cart text-center">
                                                 <a class="submit-button-1" href="#" title="Add to Cart"
-                                                    data-toggle="modal" data-target="#add_to_cart_modal">Tambah</a>
+                                                    data-toggle="modal" data-target="#add_to_cart_modal"
+                                                    wire:click="addToCart({{$wishlistItem["product_id"]}})">Tambah</a>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                        @empty
+                                        <tr>
+                                            <td colspan="3"><h4 class="text-center">Produk favorit masih kosong</h4></td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                                
                             </table>
@@ -62,10 +71,3 @@
     <!-- WISHLIST AREA START -->
 </div>
 
-
-{{-- <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores hic iste voluptas facilis sint obcaecati officia suscipit minima esse nesciunt, nemo quod aliquid qui! Nihil vitae atque necessitatibus laborum nulla!
-</p>
-<p>
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cum adipisci, ullam ad sunt natus, repellendus facere ab neque nam architecto dolor omnis unde nesciunt? Incidunt, dolore doloremque nulla in eveniet laudantium libero. Sint aut quisquam odio dolores adipisci! Distinctio, illo totam voluptatem eaque dolorum eveniet nobis culpa error id necessitatibus ad voluptatum magni!
-</p> --}}

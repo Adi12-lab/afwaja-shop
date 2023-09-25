@@ -25,7 +25,7 @@ class QuickView extends Component
     public function trigger(int $product_id) {
         return $this->product = Product::find($product_id);
     }
-
+    
     public function addToCart(int $productId) {
         if(Auth::check()) {
             if($this->product->where("id", $productId)->where("status", 0)->exists()) {

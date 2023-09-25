@@ -5,17 +5,24 @@ namespace App\Livewire\Admin\ProductVariants;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use Exception;
+use Livewire\Attributes\Locked;
+use Livewire\Attributes\On;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 use function Laravel\Prompts\error;
 
 class Index extends Component
 {
-    use WithPagination;
     protected $paginationTheme = "bootstrap";
 
-    public $name, $code, $size, $original_price, $selling_price, $quantity, $product_id, $productVariant_id;
+    #[Locked]
+    public $product_id;
+    
+    public $name, $code, $size, $original_price, $selling_price, $quantity, $productVariant_id;
+
+    public function mount(int $id) {
+        $this->product_id = $id;
+    }
 
     public function rules() {
         return [
@@ -37,7 +44,6 @@ class Index extends Component
         $this->original_price = NULL;
         $this->selling_price = NULL;
         $this->quantity = NULL;
-        $this->product_id = NULL;
         $this->productVariant_id = NULL;
     }
 
@@ -51,17 +57,18 @@ class Index extends Component
                 "original_price" => $this->original_price,
                 "selling_price" => $this->selling_price,
                 "quantity" => $this->quantity,
-                "product_id" => $this->product_id,
             ]);
-            session()->flash("message", [
-                "status" => 201,
-               "message" => "Varian produk telah ditambahkan"
-            ]);
+           $this->dispatch("alert", message: [
+            "title" => "Berhasil",
+            "icon" => "success",
+            "text" => "Produk berhasil ditambahkan"
+           ]);
         } catch(Exception $e) {
-            session()->flash("message",
-            [   "status" => 403,
-                "message" => $e->getMessage()
-            ]);
+            $this->dispatch("alert", message: [
+                "title" => "Error",
+                "icon" => "error",
+                "text" => $e->getMessage()
+               ]);
 
         }
 
@@ -87,7 +94,6 @@ class Index extends Component
         $this->original_price = $productVariant->original_price;
         $this->selling_price = $productVariant->selling_price;
         $this->quantity = $productVariant->quantity;
-        $this->product_id = $productVariant->product_id;
     }
 
     public function updateProductVariant() {
@@ -101,17 +107,18 @@ class Index extends Component
                 "original_price" =>$this->original_price,
                 "selling_price" =>$this->selling_price,
                 "quantity" =>$this->quantity,
-                "product_id" =>$this->product_id,
             ]);
-            session()->flash("message", [
-                "status" => 200,
-                "message" => "Varian produk berhasil diedit"
-            ]);
+            $this->dispatch("alert", message: [
+                "title" => "Berhasil",
+                "icon" => "success",
+                "text" => "Produk berhasil diedit"
+               ]);
         } catch(Exception $e) {
-            session()->flash("message", [
-                "status" => 403,
-                "message" => $e->getMessage()
-            ]);
+            $this->dispatch("alert", message: [
+                "title" => "Error",
+                "icon" => "error",
+                "text" => $e->getMessage()
+               ]);
         }
 
         $this->dispatch("close-modal");
@@ -120,33 +127,35 @@ class Index extends Component
 
     public function deleteProductVariant(int $productVariant_id) {
         $this->productVariant_id = $productVariant_id;
+        $this->dispatch("confirmDelete");
     }
 
+    #[On("destroying")]
     public function destroyProductVariant() {
         try {
             ProductVariant::findOrFail($this->productVariant_id)->delete();
-            session()->flash("message", 
-            [   "status" => 204,
-                "message" => "Varian produk berhasil dihapus"
-            ]);
+            $this->dispatch("alert", message: [
+                "title" => "Berhasil",
+                "icon" => "success",
+                "text" => "Produk varian berhasil dihapus"
+               ]);
         } catch(Exception $e) {
-            session()->flash("message", 
-            [   "status" => 403,
-                "message" => $e->getMessage()
-            ]);
+            $this->dispatch("alert", message: [
+                "title" => "Error",
+                "icon" => "error",
+                "text" => $e->getMessage()
+               ]);
 
         }
-        $this->dispatch("close-modal");
-        $this->resetInput();
     }
     
     public function render()
     {
-        $products = Product::all();
-        $productVariants = ProductVariant::orderBy("id", "DESC")->paginate(10);
+        $productVariants = ProductVariant::orderBy("id", "DESC")->where("product_id", $this->product_id)->get();
 
         return view('livewire.admin.product-variants.index',
-                    ["products" => $products,
-                    "productVariants" => $productVariants])->extends("layouts.admin")->section("wrapper");
+                    ["productVariants" => $productVariants])
+                    ->extends("layouts.admin")
+                    ->section("wrapper");
     }
 }

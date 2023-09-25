@@ -24,6 +24,8 @@ class Index extends Component
         ];
     }
 
+  
+
     public function resetInput() {
         $this->name = NULL;
         $this->slug = NULL;
@@ -59,7 +61,7 @@ class Index extends Component
         $brand = Brand::findOrFail($brand_id);
         $this->name = $brand->name;
         $this->slug = $brand->slug;
-        $this->status = $brand->status;
+        $this->status = $brand->status === 1 ? true : false;
 
     }
 

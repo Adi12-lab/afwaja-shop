@@ -14,9 +14,7 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    public function index() {
-        return view("admin.product.index");
-    }
+   
 
     public function create() {
         $categories = Category::all();
@@ -136,5 +134,6 @@ class ProductController extends Controller
        
         return to_route("product.index")->with("message", "Produk $product->name berhasil diedit");
     }
+
   
 }

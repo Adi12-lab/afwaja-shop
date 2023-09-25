@@ -29,17 +29,24 @@
                                             <div class="modal-product-info">
                                                 @if ($message['type'] !== 'error' && isset($product))
                                                     <h5>
-                                                        <a href="{{ route('frontend.product.view', $product->slug) }}">{{ $product->name }}</a>
+                                                        <a
+                                                            href="{{ route('frontend.product.view', $product->slug) }}">{{ $product->name }}</a>
                                                     </h5>
                                                     <p class="added-cart">
-                                                        <i class="fa fa-check-circle"></i>
+                                                        <i class="fa fa-check-circle mr-2"></i>
                                                         {{ $message['text'] }}
                                                     </p>
                                                     <div class="btn-wrapper">
-                                                        <a href="{{ route('wishlist') }}" class="theme-btn-1 btn btn-effect-1">Lihat Favorit</a>
+                                                        <a href="{{ route('wishlist') }}"
+                                                            class="theme-btn-1 btn btn-effect-1">Lihat Favorit</a>
                                                     </div>
+                                                @elseif($message['type'] !== 'error' && !isset($product))
+                                                    <p class="added-cart"><i
+                                                            class="fa fa-check-circle mr-2"></i>{{ $message['text'] }}
+                                                    </p>
                                                 @else
-                                                    <p class="added-cart"><i class="fa fa-check-circle mr-3"></i>{{ $message['text'] }}
+                                                    <p class="added-cart">
+                                                        <i class="fas fa-times-circle mr-2"></i>{{ $message['text'] }}
                                                     </p>
                                                 @endif
                                             </div>
