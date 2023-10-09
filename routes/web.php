@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,17 +16,27 @@ use App\Http\Controllers\Admin\DashboardController;
 */
 
 
-Route::get("/", App\Livewire\Frontend\Index::class)->name("home");
-// Route::get("produk", App\Livewire\Frontend\Product\Index::class)->name("frontend.product.index");
-Route::controller(App\Http\Controllers\Frontend\ProductController::class)->group(function() {
+Route::get("/",[\App\Http\Controllers\Frontend\FrontendController::class, "index"])->name("home");
+// Route::get("produk", \App\Livewire\Frontend\Product\Index::class)->name("frontend.product.index");
+Route::controller(\App\Http\Controllers\Frontend\ProductController::class)->group(function() {
     Route::get("produk", "index")->name("frontend.product.index");
 });
-Route::get("produk/{product:slug}", App\Livewire\Frontend\Product\View::class)->name("frontend.product.view");
+Route::get("produk/{product:slug}", \App\Livewire\Frontend\Product\View::class)->name("frontend.product.view");
 
 Route::middleware(["auth"])->group(function() {
-    Route::get("favorit", App\Livewire\Frontend\Wishlist\Index::class)->name("wishlist");
-    Route::get("keranjang", App\Livewire\Frontend\Cart\Index::class)->name("cart");
-    Route::get("profil", App\Livewire\Frontend\User\Index::class, "profile")->name("profil");
+    Route::get("favorit", \App\Livewire\Frontend\Wishlist\Index::class)->name("wishlist");
+    // Route::get("keranjang", \App\Livewire\Frontend\Cart\Index::class)->name("cart");
+    Route::get("keranjang", [\App\Http\Controllers\Frontend\CartController::class, "index"])->name("cart");
+    Route::post("keranjang", [\App\Http\Controllers\Frontend\CartController::class, "create"]);
+    
+
+    // Route::get("checkout", \App\Livewire\Frontend\)->name("checkout");
+    Route::controller(\App\Http\Controllers\Frontend\CheckoutController::class)->group(function() {
+        Route::get("checkout", "index")->name("checkout");
+        Route::get("checkout/getCities", "getCities")->name("getCities");
+        Route::get("checkout/getSubdistricts", "getSubdistricts")->name("getSubdistricts");
+    });
+    Route::get("profil", \App\Livewire\Frontend\User\Index::class, "profile")->name("profil");
 });
 
 
@@ -34,7 +45,7 @@ Route::get("test", function() {
 });
 
 
-Route::controller(App\Http\Controllers\Frontend\FrontendController::class)->group(function() {
+Route::controller(\App\Http\Controllers\Frontend\FrontendController::class)->group(function() {
     Route::get("kategori", "categories");
     Route::get("kategori/{category_slug}", "productCategory")->name("frontend.category.view");
     // Route::get("produk/{product_slug}", "productView")->name("frontend.product.view");
@@ -45,24 +56,26 @@ Route::prefix("admin")->middleware(["auth", "isAdmin"])->group(function() {
     Route::get("/dashboard",  [DashboardController::class, "index"])->name("admin.dashboard");
 
       //Category Routes
-      Route::get("category", App\Livewire\Admin\Category\Index::class)->name("category.index");
-      Route::controller(App\Http\Controllers\Admin\CategoryController::class)->group(function() {
+      Route::get("category", \App\Livewire\Admin\Category\Index::class)->name("category.index");
+      Route::controller(\App\Http\Controllers\Admin\CategoryController::class)->group(function() {
         Route::post("category", "store")->name("category.store");
         Route::get("category/create", "create")->name("category.create");
         Route::get("category/{category}/edit", "edit")->name("category.edit");
         Route::put("category/{category}", "update")->name("category.update");
     });
     
-    Route::get("product", App\Livewire\Admin\Product\Index::class)->name("product.index");
-    Route::controller(App\Http\Controllers\Admin\ProductController::class)->group(function() {
+    Route::get("product", \App\Livewire\Admin\Product\Index::class)->name("product.index");
+    Route::controller(\App\Http\Controllers\Admin\ProductController::class)->group(function() {
         Route::get("product/create", "create")->name("product.create");
         Route::post("product", "store")->name("product.store");
         Route::get("product/{product_id}/edit", "edit")->name("product.edit");
         Route::put("product/{product_id}", "update")->name("product.update");
     });
     
-    Route::get("brands", App\Livewire\Admin\Brand\Index::class);
-    Route::get("product/{id}/variants", App\Livewire\Admin\ProductVariants\Index::class)->name("product.variants");
+    Route::get("flashsale", \App\Livewire\Admin\FlashSale\Index::class)->name("flashsale");
+    Route::get("brands", \App\Livewire\Admin\Brand\Index::class);
+    Route::get("quotes", \App\Livewire\Admin\Quote\Index::class)->name("quotes");
+    Route::get("product/{id}/variants", \App\Livewire\Admin\ProductVariants\Index::class)->name("product.variants");
 
 
 });

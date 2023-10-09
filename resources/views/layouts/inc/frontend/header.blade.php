@@ -58,7 +58,7 @@
                            <nav>
                                <div class="ltn__main-menu">
                                    <ul>
-                                       <li class="menu-icon"><a href="#">Home</a>
+                                       <li class="menu-icon"><a href="{{route("home")}}">Home</a>
                                        </li>
                                        <li class="menu-icon"><a href="#">About Us</a>
 

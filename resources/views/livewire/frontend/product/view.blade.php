@@ -50,8 +50,8 @@
 
                                         @if ($selected_size['original_price'] > 0)
                                             <del>{{ rupiah($selected_size['original_price']) }}</del>
-                                        @elseif($selected_size['original_price'] === 0 && $selected_size["selling_price"] === 0) 
-                                        {{-- Jika original price yang terselect masih 0 dan selling_price yang terpilih masih 0 --}}
+                                        @elseif($selected_size['original_price'] === 0 && $selected_size['selling_price'] === 0)
+                                            {{-- Jika original price yang terselect masih 0 dan selling_price yang terpilih masih 0 --}}
                                             <del> {{ rupiah($product->productVariants[0]->original_price) }}<del>
                                         @endif
                                     </div>
@@ -64,35 +64,35 @@
                                                 </span>
                                             </li>
                                         </ul>
-                                        @if(isset($size_available[0]["size"]))
-                                        <!-- Size Widget -->
-                                        <div class="ltn__tagcloud-widget">
-                                            <h5>Ukuran</h5>
-                                            <ul>
-                                                @foreach ($size_available as $sizeItem)
-                                                    <li wire:key="{{ str()->random(11) }}">
-                                                        <a class="{{ $selected_size['name'] === $sizeItem['size'] ? 'active' : '' }}"
-                                                            wire:click.prevent="selectSize('{{ $sizeItem['size'] }}')">
-                                                            {{ $sizeItem['size'] }}
-                                                        </a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                        <div class="ltn__color-widget mt-4">
-                                            <h5>Varian</h5>
-                                            <ul>
-                                                @foreach ($variant_available as $variantItem)
-                                                    <li wire:key="{{ str()->random(11) }}"
-                                                        class="{{ $selected_variant["code"] === $variantItem['code'] ? 'active' : '' }}"
-                                                        style="background-color: {{ $variantItem['code'] }}">
-                                                        <a href="#"
-                                                            wire:click.prevent="selectVariant('{{ $variantItem['code'] }}')"></a>
-                                                    </li>
-                                                @endforeach
+                                        @if (isset($size_available[0]['size']))
+                                            <!-- Size Widget -->
+                                            <div class="ltn__tagcloud-widget">
+                                                <h5>Ukuran</h5>
+                                                <ul>
+                                                    @foreach ($size_available as $sizeItem)
+                                                        <li wire:key="{{ str()->random(11) }}">
+                                                            <a class="{{ $selected_size['name'] === $sizeItem['size'] ? 'active' : '' }}"
+                                                                wire:click.prevent="selectSize('{{ $sizeItem['size'] }}')">
+                                                                {{ $sizeItem['size'] }}
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                            <div class="ltn__color-widget mt-4">
+                                                <h5>Varian</h5>
+                                                <ul>
+                                                    @foreach ($variant_available as $variantItem)
+                                                        <li wire:key="{{ str()->random(11) }}"
+                                                            class="{{ $selected_variant['code'] === $variantItem['code'] ? 'active' : '' }}"
+                                                            style="background-color: {{ $variantItem['code'] }}">
+                                                            <a href="#"
+                                                                wire:click.prevent="selectVariant('{{ $variantItem['code'] }}')"></a>
+                                                        </li>
+                                                    @endforeach
 
-                                            </ul>
-                                        </div>
+                                                </ul>
+                                            </div>
                                         @endif
                                     </div>
                                     <div class="ltn__product-details-menu-2">
@@ -106,13 +106,24 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <a href="#" class="theme-btn-1 btn btn-effect-1"
-                                                    wire:click="addToCart({{$product->id}})" title="Add to Cart" data-toggle="modal"
-                                                    data-target="#add_to_cart_modal"
-                                                    wire:loading.disabled wire:target="addToCart">
-                                                    <i class="fas fa-shopping-cart"></i>
-                                                    <span>ADD TO CART</span>
-                                                </a>
+                                                @if (auth()->check())
+                                               
+                                                    <button class="theme-btn-1 btn btn-effect-1"
+                                                        {{ $product->status === 0 ? 'disabled' : '' }}
+                                                        wire:click="addToCart({{ $product->id }})" title="Add to Cart"
+                                                        data-toggle="modal" data-target="#add_to_cart_modal"
+                                                        wire:loading.disabled wire:target="addToCart">
+                                                        <i class="fas fa-shopping-cart"></i>
+                                                        <span>ADD TO CART</span>
+                                                    </button>
+                                                @else
+                                                    <a href="{{ route('login') }}"
+                                                        class="theme-btn-1 btn btn-effect-1">
+                                                        <i class="fas fa-shopping-cart"></i>
+                                                        <span>ADD TO CART</span>
+                                                    </a>
+                                                @endif
+
                                             </li>
                                         </ul>
                                     </div>
@@ -121,7 +132,7 @@
                                             <li>
                                                 <a href="#" title="Wishlist" data-toggle="modal"
                                                     data-target="#liton_wishlist_modal"
-                                                    wire:click="addToWishlist({{$product->id}})">
+                                                    onclick="addToWishlist({{ $product->id }})">
                                                     <i class="far fa-heart"></i>
                                                     <span>Favorit</span>
                                                 </a>
@@ -356,20 +367,33 @@
                                         <li>
                                             <a href="#" title="Quick View" data-toggle="modal"
                                                 data-target="#quick_view_modal"
-                                                wire:click="quickView({{ $relatedProduct->id }})">
+                                                onclick="quickView({{ $relatedProduct->id }})">
                                                 <i class="far fa-eye"></i>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" title="Add to Cart" data-toggle="modal"
-                                                data-target="#add_to_cart_modal">
-                                                <i class="fas fa-shopping-cart"></i>
-                                            </a>
+                                            @if ($isLogin)
+                                                <a href="#" title="Add to Cart" data-toggle="modal"
+                                                    data-target="#add_to_cart_modal"
+                                                    onclick="addToCart({{ $relatedProduct->id }})">
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                </a>
+                                            @else
+                                                <a href="{{ route('login') }}">
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                </a>
+                                            @endif
                                         </li>
                                         <li>
-                                            <a href="#" title="Wishlist" data-toggle="modal"
-                                                data-target="#liton_wishlist_modal">
-                                                <i class="far fa-heart"></i></a>
+                                            @if ($isLogin)
+                                                <a href="#" title="Wishlist" data-toggle="modal"
+                                                    data-target="#liton_wishlist_modal"
+                                                    onclick="addToWishlist({{ $relatedProduct->id }})">
+                                                    <i class="far fa-heart"></i></a>
+                                            @else
+                                                <a href="{{ route('login') }}">
+                                                    <i class="far fa-heart"></i></a>
+                                            @endif
                                         </li>
                                     </ul>
                                 </div>
@@ -385,7 +409,8 @@
                                     </ul>
                                 </div>
                                 <h2 class="product-title"><a
-                                        href="product-details.html">{{ $relatedProduct->name }}</a></h2>
+                                        href="{{ route('frontend.product.view', $relatedProduct->slug) }}">{{ $relatedProduct->name }}</a>
+                                </h2>
                                 <div class="product-price">
                                     <span>{{ rupiah($relatedProduct->productVariants[0]->selling_price) }}</span>
                                     @isset($relatedProduct->productVariants[0]->original_price)
@@ -401,3 +426,25 @@
     </div>
     <!-- PRODUCT SLIDER AREA END -->
 </div>
+
+@push('scripts')
+    <script>
+        function quickView(product_id) {
+            Livewire.dispatch("quickViewTrigger", {
+                product_id: product_id
+            })
+        }
+
+        function addToWishlist(product_id) {
+            Livewire.dispatch("addToWishlist", {
+                product_id: product_id
+            })
+        }
+
+        function addToCart(product_id) {
+            Livewire.dispatch("addToCart", {
+                product_id
+            })
+        }
+    </script>
+@endpush

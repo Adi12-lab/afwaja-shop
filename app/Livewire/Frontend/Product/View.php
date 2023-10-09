@@ -2,15 +2,16 @@
 namespace App\Livewire\Frontend\Product;
 
 use App\Models\Product;
-use App\Models\Wishlist;
 use App\Models\Cart;
+
 use Illuminate\Support\Facades\Auth;
+
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class View extends Component {
 
-    public Product $product, $product_quick_view;
+    public Product $product;
 
     public $size_available, $variant_available;
 
@@ -102,42 +103,12 @@ class View extends Component {
                                         ];
                                     })->values()->collapse();
     }
-
-    public function addToWishlist(int $productId) {
-        if(Auth::check()) {
-
-            if(Wishlist::where("user_id", auth()->user()->id)->where("product_id", $productId)->exists()) {
-                $this->dispatch("wishlistAlert", message: [
-                    "text" => "Sudah ditambahkan ke Favorit",
-                    "type" => "success",
-                    "product_id" => $productId, 
-                    "status" => 409
-               ]);
-                return false; 
-
-            }
-             else {
-                Wishlist::create([
-                     "user_id" => auth()->user()->id,
-                     "product_id" => $productId
-                 ]);
-                $this->dispatch("wishlistAlert", message: [
-                    "text" => "Produk berhasil ditambhkan ke Favorit",
-                    "type" => "success",
-                    "product_id" => $productId, 
-                    "status" => 200
-               ]);
-                 return true;
-             }
-        }
-        else {
-            return to_route("login");
-        }
-    }
-
+    
+    
     public function addToCart(int $productId) {
-        if(Auth::check()) {
-            if($this->product->where("id", $productId)->where("status", 0)->exists()) {
+            $product = $this->product->firstWhere("id", $productId);
+            // dd($product);
+            if($product && $product->status === 1) {
                 $cekVariant = $this->globalVariants->where("size", $this->selected_size["name"])->where("code", $this->selected_variant["code"])->first();
                 if($cekVariant) {
                     if($this->quantity > 0) {
@@ -145,7 +116,6 @@ class View extends Component {
                             $existsCart = Cart::
                                         where("product_id", $productId)
                                         ->where("product_variant_id", $cekVariant->id)->where("user_id", auth()->user()->id)->first();
-
                             if($existsCart) {
                                 $existsCart->increment("quantity", $this->quantity);
                                 $this->dispatch("cartChanged");
@@ -169,7 +139,6 @@ class View extends Component {
                                     "product_id" => $productId, 
                                     "status" => 201
                                ]);
-
                             }
                         } else {
                             //dispatch quantity tidak cukup
@@ -196,18 +165,13 @@ class View extends Component {
                    ]);
                 }
             }
-        } else {
-            return to_route("login");
-
-        }
-    }
-    public function quickView(int $product_id) {
-        $this->product_quick_view = Product::find($product_id);
+      
     }
 
     public function render() {
         return view("livewire.frontend.product.view")->with([
-            "product" => $this->product
+            "product" => $this->product,
+            "isLogin" => Auth::check()
         ])->extends("layouts.app")->section("main");
     }
 }

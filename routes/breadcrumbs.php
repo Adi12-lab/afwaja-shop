@@ -37,6 +37,10 @@ Breadcrumbs::for("profil", function(BreadcrumbTrail $trail ) {
     $trail->push("Profil Saya", route("profil"));
 });
 
+Breadcrumbs::for("checkout", function(BreadcrumbTrail $trail ) {
+    $trail->parent("/");
+    $trail->push("Checkout", route("checkout"));
+});
 
 
 // // Home > Blog > [Category]

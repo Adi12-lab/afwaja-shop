@@ -34,6 +34,7 @@ class ProductFactory extends Factory
             "description" => $mergeParagraphs,
             "isNew" => mt_rand(0, 1),
             "status" => mt_rand(0, 1),
+            "isPopular" => mt_rand(0, 1),
             "meta_title" => $name,
             "meta_keyword" => $name,
             "meta_description" => $mergeSmallParagraphs,

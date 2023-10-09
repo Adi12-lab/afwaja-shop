@@ -9,6 +9,7 @@ use App\Modles\productImages;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
@@ -30,5 +31,9 @@ class Product extends Model
 
     public function productVariants() {
         return $this->hasMany(ProductVariant::class, "product_id", "id");
+    }
+
+    public function flashSale(): HasOne {
+        return $this->hasOne(FlashSale::class, "product_id", "id");
     }
 }

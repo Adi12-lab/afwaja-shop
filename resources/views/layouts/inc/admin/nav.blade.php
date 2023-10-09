@@ -20,13 +20,12 @@
             <ul>
                 <li> <a href="{{ url('index') }}"><i class="bx bx-right-arrow-alt"></i>eCommerce</a>
                 </li>
-                <li> <a href="{{ url('dashboard-alternate') }}"><i class="bx bx-right-arrow-alt"></i>Analytics</a>
+                <li> <a href="{{ route("flashsale") }}"><i class="bx bx-right-arrow-alt"></i>Flash Sale</a>
                 </li>
             </ul>
         </li>
 
-        <li class="menu-label">UI Elements</li>
-
+        <li class="menu-label">Commerce</li>
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='bx bx-cube'></i>
@@ -61,6 +60,15 @@
                         Products</a>
                 </li>
             </ul>
+        </li>
+
+        <li class="menu-label">Other</li>
+        <li>
+            <a href="{{route("quotes")}}">
+                <div class="parent-icon"><i class='bx bx-bold'></i>
+                </div>
+                <div class="menu-title">Quotes</div>
+            </a>
         </li>
     </ul>
     <!--end navigation-->

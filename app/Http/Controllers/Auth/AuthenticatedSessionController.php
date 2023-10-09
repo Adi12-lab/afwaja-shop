@@ -28,8 +28,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
     // Ambil informasi peran pengguna setelah otentikasi
-    $user = Auth::user();
-    $role = $user->role_as;
+        $user = Auth::user();
+        $role = $user->role_as;
 
     if ($role == 1) {
     // Jika peran adalah admin, arahkan ke halaman admin

@@ -8,6 +8,7 @@
     <!--favicon-->
     <link rel="icon" href="{{ asset('admin/images/favicon-32x32.png') }}" type="image/png" />
     <!--plugins-->
+    @stack("style")
     @yield('style')
     <link href="{{ asset('admin/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
     <!-- loader-->
@@ -23,9 +24,7 @@
     <link rel="stylesheet" href="{{ asset('admin/css/semi-dark.css') }}" />
     <link rel="stylesheet" href="{{ asset('admin/css/header-colors.css') }}" />
 
-    <title>Syndron - Bootstrap5 Admin Template</title>
-    @livewireStyles
-
+    <title>Welcome Admin</title>
 </head>
 
 <body>
@@ -165,7 +164,6 @@
     @yield('script')
     @stack('script')
     @include('layouts.inc.admin.theme-control')
-    @livewireScripts
 
 </body>
 

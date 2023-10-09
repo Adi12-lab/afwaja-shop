@@ -21,6 +21,7 @@ return new class extends Migration
             $table->mediumText("small_description")->nullable();
             $table->longText("description")->nullable();
             $table->boolean("isNew")->default(true)->comment("1=new, 0=old");
+            $table->boolean("isPopular")->default(false)->comment("1=featured, 0=no");
             $table->boolean("status")->default(true)->comment("0=hidden, 1=aktif");
             
             $table->string("meta_title")->nullable();

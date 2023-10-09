@@ -8,9 +8,10 @@
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta name="csrf-token" content="{{csrf_token()}}">
     <!-- Place favicon.png in the root directory -->
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}" type="image/x-icon" />
+    @yield("styles")
     <!-- Font Icons css -->
     <link rel="stylesheet" href="{{ asset('assets/css/font-icons.css') }}">
     <!-- plugins css -->
@@ -19,7 +20,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
-    @livewireStyles
 
 </head>
 
@@ -52,7 +52,6 @@
     <script src="{{ asset('assets/js/main.js') }}"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @livewireScripts
     @yield("scripts")
     @stack('scripts')
 

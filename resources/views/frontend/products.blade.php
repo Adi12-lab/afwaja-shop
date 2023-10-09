@@ -18,7 +18,7 @@
                             </li>
                             <li>
                                 <div class="showing-product-number text-right">
-                                    <span>Showing 1–12 of 18 results</span>
+                                    <span>Showing {{$startIndex}}–{{$endIndex}} of {{$products->total()}} results</span>
                                 </div>
                             </li>
                             <li>
@@ -50,26 +50,34 @@
                                                     </a>
                                                     <div class="product-badge">
                                                         <ul>
-                                                            <li class="sale-badge">Sale</li>
+                                                            @if ($product->status === 1)
+                                                                <li class="sale-badge">Sale</li>
+                                                            @else
+                                                                <li class="soldout-badge">Sold Out</li>
+                                                            @endif
                                                         </ul>
                                                     </div>
                                                     <div class="product-hover-action">
                                                         <ul>
                                                             <li>
-                                                                <a href="#" title="Quick View" onclick="quickView({{$product->id}})"
-                                                                 data-toggle="modal" data-target="#quick_view_modal">
+                                                                <a href="#" title="Quick View"
+                                                                    onclick="quickView({{ $product->id }})"
+                                                                    data-toggle="modal" data-target="#quick_view_modal">
                                                                     <i class="far fa-eye"></i>
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" title="Add to Cart"
-                                                                    data-toggle="modal" data-target="#add_to_cart_modal">
-                                                                    <i class="fas fa-shopping-cart"></i>
+                                                                <a href="{{ !$isLogin ? route('login') : '#' }}"
+                                                                    title="Add to Cart"
+                                                                    @if ($isLogin) onclick="addToCart({{ $product->id }})"
+                                                                    data-toggle='modal' data-target='#add_to_cart_modal' @endif><i
+                                                                        class='fas fa-shopping-cart'></i>
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" title="Wishlist" data-toggle="modal"
-                                                                    data-target="#liton_wishlist_modal">
+                                                                <a href="{{ !$isLogin ? route('login') : '#' }}"
+                                                                    title="Wishlist"
+                                                                    @if ($isLogin) onclick="addToWishlist({{ $product->id }})" data-toggle='modal' data-target='#liton_wishlist_modal' @endif>
                                                                     <i class="far fa-heart"></i></a>
                                                             </li>
                                                         </ul>
@@ -100,11 +108,16 @@
                                         <div class="col-lg-12">
                                             <div class="ltn__product-item ltn__product-item-3">
                                                 <div class="product-img">
-                                                    <a href="product-details.html"><img src="{{ asset($product->productImages[0]->image ?? null) }}"
+                                                    <a href="product-details.html"><img
+                                                            src="{{ asset($product->productImages[0]->image ?? null) }}"
                                                             alt="#"></a>
                                                     <div class="product-badge">
                                                         <ul>
-                                                            <li class="sale-badge">New</li>
+                                                            @if ($product->status === 1)
+                                                                <li class="sale-badge">Sale</li>
+                                                            @else
+                                                                <li class="soldout-badge">Sold Out</li>
+                                                            @endif
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -116,8 +129,7 @@
                                                             <li><a href="#"><i class="fas fa-star"></i></a></li>
                                                             <li><a href="#"><i class="fas fa-star"></i></a></li>
                                                             <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                            <li><a href="#"><i
-                                                                        class="fas fa-star-half-alt"></i></a>
+                                                            <li><a href="#"><i class="fas fa-star-half-alt"></i></a>
                                                             </li>
                                                             <li><a href="#"><i class="far fa-star"></i></a></li>
                                                         </ul>
@@ -133,19 +145,22 @@
                                                     <div class="product-hover-action">
                                                         <ul>
                                                             <li>
-                                                                <a href="#" title="Quick View" onclick="quickView($product->id)">
+                                                                <a href="#" title="Quick View"
+                                                                    onclick="quickView($product->id)">
                                                                     <i class="far fa-eye"></i>
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" title="Add to Cart"
-                                                                    data-toggle="modal" data-target="#add_to_cart_modal">
-                                                                    <i class="fas fa-shopping-cart"></i>
+                                                                <a href="{{ !$isLogin ? route('login') : '#' }}"
+                                                                    title="Add to Cart"
+                                                                    {{ $isLogin ? "data-toggle='modal' data-target='#add_to_cart_modal'" : '' }}><i
+                                                                        class='fas fa-shopping-cart'></i>
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" title="Wishlist" data-toggle="modal"
-                                                                    data-target="#liton_wishlist_modal">
+                                                                <a href="{{ !$isLogin ? route('login') : '#' }}"
+                                                                    title="Wishlist"
+                                                                    {{ $isLogin ? "data-toggle='modal data-target='#liton_wishlist_modal'" : '' }}>
                                                                     <i class="far fa-heart"></i></a>
                                                             </li>
                                                         </ul>
@@ -174,8 +189,7 @@
                                     <li><a href="{{ 'kategori' }}">All Category <span><i
                                                     class="fas fa-long-arrow-alt-right"></i></span></a></li>
                                     @foreach ($categories as $category)
-                                        <li><a
-                                                href="{{ "kategori/$category->slug" }}">{{ $category->name }} <span><i
+                                        <li><a href="{{ "kategori/$category->slug" }}">{{ $category->name }} <span><i
                                                         class="fas fa-long-arrow-alt-right"></i></span></a></li>
                                     @endforeach
                                 </ul>
@@ -195,8 +209,7 @@
                             <div class="price_filter">
                                 <div class="price_slider_amount">
                                     <input type="submit" value="Your range:" />
-                                    <input type="text" class="amount" name="price"
-                                        placeholder="Add Your Price" />
+                                    <input type="text" class="amount" name="price" placeholder="Add Your Price" />
                                 </div>
                                 <div class="slider-range"></div>
                             </div>
@@ -253,10 +266,24 @@
     </div>
 @endsection
 
-@section("scripts")
-<script>
-    function quickView(product_id) {
-        Livewire.dispatch("quickViewTrigger", {product_id: product_id})
-    }
-</script>
+@section('scripts')
+    <script>
+        function quickView(product_id) {
+            Livewire.dispatch("quickViewTrigger", {
+                product_id: product_id
+            })
+        }
+
+        function addToWishlist(product_id) {
+            Livewire.dispatch("addToWishlist", {
+                product_id: product_id
+            })
+        }
+
+        function addToCart(product_id) {
+            Livewire.dispatch("addToCart", {
+                product_id
+            })
+        }
+    </script>
 @endsection

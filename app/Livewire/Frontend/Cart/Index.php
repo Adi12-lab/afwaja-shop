@@ -58,8 +58,6 @@ class Index extends Component
         }
     }
 
-
-
     public function removeCartItem(int $cartId) {
         $cartRemoveData = Cart::where("user_id", auth()->user()->id)->where("id", $cartId)->first();
 
@@ -68,7 +66,7 @@ class Index extends Component
 
             // $this->dispatch("cartChanged");
             $this->dispatch("cartAlert", message: [
-                "text" => "Item berhasil dihapus",
+                "text" => "Item Keranjang berhasil dihapus",
                 "type" => "success",
                 "status" => 204
             ]);
